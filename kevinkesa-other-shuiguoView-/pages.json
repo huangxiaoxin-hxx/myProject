@@ -1,0 +1,343 @@
+{
+	"easycom": {
+		"^u-(.*)": "uview-ui/components/u-$1/u-$1.vue",
+		"topInfo": "@/pages/components/topInfo.vue",
+		"loadding": "@/pages/components/loadding.vue"
+	},
+	"pages": [{
+			"path": "pages/shop/index",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/shop/shop/index",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/log_in",
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": "登录"
+			}
+		},
+		{
+			"path": "pages/tabbar/mallMenu/index",
+			"style": {
+				"navigationBarTitleText": "肖荣呈水果批发分类"
+			}
+		},
+		{
+			"path": "pages/shop/finish/index",
+			"style": {
+				"navigationBarTitleText": "支付完成",
+				"app-plus": {
+					"titleNView": {
+						"autoBackButton": false
+					}
+				}
+			}
+		}, 
+		{
+			"path": "pages/shop/shopCart/shopping_cart",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+
+		{
+			"path": "pages/shop/goods/product_details",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationBarBackgroundColor": "#FFFFFF"
+				// "navigationBarTextStyle": "white"
+			}
+		}, {
+			"path": "pages/shop/submit_order/index",
+			"style": {
+				"navigationBarTitleText": "提交订单",
+				"navigationBarBackgroundColor": "#FFFFFF"
+			}
+		},
+		{
+			"path": "pages/forgot_password",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+
+		{
+			"path": "pages/shipping_addres",
+			"style": {
+				"navigationBarTitleText": "收货地址",
+				"navigationBarBackgroundColor": "#42cfb0",
+				"navigationBarTextStyle": "white"
+			}
+		},
+		
+		{
+			"path": "pages/mall_order",
+			"style": {
+				"navigationBarTitleText": "商城订单",
+				"navigationBarBackgroundColor": "#fff"
+				// "navigationBarTextStyle": "white"
+			}
+		},
+		
+	{
+			"path": "pages/tabbar/my/index",
+			"style": {
+				"navigationBarTitleText": "个人中心",
+				// "navigationBarBackgroundColor": "#fff",
+				"navigationBarTextStyle": "black"
+			}
+		},
+		{
+			"path": "pages/mineList/sharePropo",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/personSet/indexSet",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/map/selectMap",
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": "地图选点"
+			}
+		}
+	],
+	"subPackages": [{
+		"root": "pagesA",
+		"pages": [{
+				"path": "setting/personal_setting",
+				"style": {
+					"navigationBarTitleText": "编辑资料",
+					"navigationBarBackgroundColor": "#fff",
+					"navigationBarTextStyle": "black"
+				}
+			},
+			{
+				"path": "more/my_team",
+				"style": {
+					"navigationStyle": "custom"
+				}
+			},
+			{
+				"path": "more/payment_successfu",
+				"style": {
+					"navigationStyle": "custom"
+				}
+			},
+			{
+				"path": "more/security_center",
+				"style": {
+					"navigationStyle": "custom"
+				}
+			},
+			{
+				"path": "more/online_service",
+				"style": {
+					"navigationBarTitleText": "联系客服",
+					"navigationBarBackgroundColor": "#fff"
+				}
+			},
+			{
+				"path": "more/pay_failure",
+				"style": {
+					"navigationStyle": "custom"
+				}
+			},
+			{
+				"path": "more/selectShop",
+				"style": {
+					"navigationBarTitleText": "选择门店",
+					"navigationBarBackgroundColor": "#fff"
+				}
+			},
+			{
+				"path": "more/selectArea",
+				"style": {
+					"navigationBarTitleText": "选择地区",
+					"navigationBarBackgroundColor": "#fff"
+				}
+			},
+			{
+				"path": "more/search",
+				"style": {
+					"navigationBarTitleText": "选择门店",
+					"navigationBarBackgroundColor": "#fff"
+				}
+			},
+			{
+				"path": "more/getVIP",
+				"style": {
+					"navigationStyle": "custom"
+				}
+			},
+			{
+				"path": "more/Collection",
+				"style": {
+					"navigationBarTitleText": "我的收藏",
+					"navigationBarBackgroundColor": "#fff"
+				}
+			},
+			{
+				"path": "more/payRecord",
+				"style": {
+					"navigationBarTitleText": "流水记录",
+					"navigationBarBackgroundColor": "#fff"
+				}
+			},
+			{
+				"path": "more/bonus",
+				"style": {
+					"navigationBarTitleText": "分销记录",
+					"navigationBarBackgroundColor": "#fff"
+				}
+			},
+			{
+				"path": "more/about",
+				"style": {
+					"navigationBarTitleText": "关于我们",
+					"navigationBarBackgroundColor": "#fff"
+				}
+			},
+			{
+				"path": "more/help_Center",
+				"style": {
+					"navigationBarTitleText": "帮助中心",
+					"navigationBarBackgroundColor": "#fff"
+				}
+			},
+			{
+				"path": "more/VIPInfo",
+				"style": {
+					"navigationBarTitleText": "VIP订单",
+					"navigationBarBackgroundColor": "#fff"
+				}
+			},
+			{
+				"path": "more/hexiao",
+				"style": {
+					"navigationBarTitleText": "订单核销",
+					"navigationBarBackgroundColor": "#fff"
+				}
+			},
+			{
+				"path": "more/userAgree",
+				"style": {
+					"navigationBarTitleText": "",
+					"navigationBarBackgroundColor": "#fff"
+				}
+			},
+			{
+				"path": "more/shenqing",
+				"style": {
+					"navigationBarTitleText": "商家申请",
+					"navigationBarBackgroundColor": "#fff"
+				}
+			},
+			{
+				"path": "more/shopEdit",
+				"style": {
+					"navigationBarTitleText": "商家修改",
+					"navigationBarBackgroundColor": "#fff"
+				}
+			},
+			{
+				"path": "more/orderShop",
+				"style": {
+					"navigationBarTitleText": "商家订单",
+					"navigationBarBackgroundColor": "#fff"
+				}
+			},
+			{
+				"path": "more/statistics",
+				"style": {
+					"navigationBarTitleText": "数据统计",
+					"navigationBarBackgroundColor": "#fff"
+				}
+			},
+			{
+				"path": "more/goodsSet",
+				"style": {
+					"navigationBarTitleText": "产品操作",
+					"navigationBarBackgroundColor": "#fff"
+				}
+			},
+			{
+				"path": "more/editGoods",
+				"style": {
+					"navigationBarTitleText": "编辑商品",
+					"navigationBarBackgroundColor": "#fff"
+				}
+			},
+			{
+				"path": "more/guige",
+				"style": {
+					"navigationBarTitleText": "产品规格修改",
+					"navigationBarBackgroundColor": "#fff"
+				}
+			},
+			{
+				"path": "more/order_details",
+				"style": {
+					"navigationStyle": "custom"
+				}
+			},
+			{
+				"path": "more/add_address",
+				"style": {
+					"navigationStyle": "custom"
+				}
+			}
+		]
+	}],
+	"tabBar": {
+		"custom": true,
+		"color": "#D2D2D2",
+		"selectedColor": " #36c8e1",
+		"borderStyle": "black",
+		"backgroundColor": "#FFFFFF",
+		"list": [{
+			"pagePath": "pages/shop/index",
+			"text": "商城",
+			"iconPath": "static/img/tabbar/b_icon4.png",
+			"selectedIconPath": "static/img/tabbar/a_icon4.png"
+		}, {
+			"pagePath": "pages/tabbar/mallMenu/index",
+			"text": "购物车",
+			"iconPath": "static/img/tabbar/b_icon5.png",
+			"selectedIconPath": "static/img/tabbar/a_icon5.png"
+		}, {
+			"pagePath": "pages/shop/shopCart/shopping_cart",
+			"text": "购物车",
+			"iconPath": "static/img/tabbar/b_icon5.png",
+			"selectedIconPath": "static/img/tabbar/a_icon5.png"
+		}, {
+			"pagePath": "pages/mall_order",
+			"text": "订单",
+			"iconPath": "static/img/tabbar/b_icon5.png",
+			"selectedIconPath": "static/img/tabbar/a_icon5.png"
+		}, {
+			"pagePath": "pages/tabbar/my/index",
+			"text": "我的",
+			"iconPath": "static/img/tabbar/b_icon5.png",
+			"selectedIconPath": "static/img/tabbar/a_icon5.png"
+		}]
+	},
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "肖荣呈水果批发",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	}
+}

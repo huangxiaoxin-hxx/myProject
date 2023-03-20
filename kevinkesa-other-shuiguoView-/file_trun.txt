@@ -1,0 +1,108 @@
+0-1登录 => log_in
+
+0-3忘记密码 => forgot_password
+
+1-1-1首页-未点赞-APP => homepage_is_not
+
+1-1-2首页-未点赞-H5 => homepage_is_not1
+
+1-2搜索 => search_for
+
+1-3评论 => comment
+
+1-4分享 => share_it
+
+2-1发布视频 => release_video
+
+1-5个人中心 => personal_center
+
+2-3选择音乐 => choose_music
+
+5-1任务大厅 => mission_hall
+
+5-2我的任务-待完成 => my_task_is_complete
+
+5-3我的任务-已完成 => my_task_has_been
+
+5-4支付 => pay
+
+5-6规则说明 => rule_instruction
+
+4-1-1个人设置 => personal_setting
+
+4-2-1消息中心 => message_center
+
+4-1-2等级介绍 => level_introductio
+
+4-0我的 => mine
+
+4-4-1我的发布 => my_release
+
+4-6-1资产中心-VST数量 => asset_center_red
+
+4-2-3公告列表 => announcement_lis
+
+4-5-1商城订单 => mall_order
+
+4-5-2订单详情 => order_details
+
+4-6-2资产中心-任务活跃值 => asset_center_task
+
+4-7-4实名认证-付费 => real_name_certification
+
+4-7-1实名认证-未认证 => real_name_certification29
+
+4-2-5点赞列表 => list_of_praise
+
+4-2-4公告详情 => announcement_detail
+
+4-7-2实名认证-审核中-审核成功 => real_name_certification32
+
+4-2-6评论列表 => comment_list
+
+4-11-1支付中心 => payment_center
+
+4-11-2绑定微信 => bind_wechat
+
+4-11-3我的微信 => my_wechat
+
+4-11-4绑定支付宝 => bind_alipay
+
+4-11-5绑定银行卡 => bind_bank_card
+
+4-12安全中心 => security_center
+
+4-13在线客服 => online_service
+
+4-14收货地址 => shipping_addres
+
+4-7-3实名认证-审核失败 => real_name_certification42
+
+4-3-1粉丝 => fans
+
+4-8-1我的团队 => my_team
+
+4-3-2关注 => attention
+
+4-8-2团队规则 => team_rule
+
+4-10收益记录 => income_record
+
+4-9邀请好友 => invite_friends
+
+3-4-2购物车-删除 => shopping_cart
+
+3-0商城首页 => home
+
+3-1-1商品详情 => product_details
+
+3-2-1提交订单-未添加地址 => submit_an_order
+
+3-2-3添加地址 => add_address
+
+3-3-1支付成功 => payment_successfu
+
+3-3-2支付失败 => pay_failure
+
+3-4-1购物车 => shopping_cart61
+
