@@ -3,10 +3,13 @@
     <view class="no-navbar-top" v-if="!isNavBar" :style="{ height: statusBarHeight + 'rpx' }"></view>
     <view v-if="isNavBar">
       <u-navbar
-        title="个人中心"
+        :title="navBarTitle"
         :autoBack="isAutoBack"
         :fixed="fixed"
         :placeholder="true"
+        :bgColor="bgColor"
+        :titleStyle="{ color: titleColor }"
+        :leftIconColor="titleColor"
       >
       </u-navbar>
     </view>
@@ -43,6 +46,8 @@ export default {
     isNavBar: { type: Boolean, default: true },
     navBarTitle: { type: String, default: '' },
     isAutoBack: { type: Boolean, default: true },
+    bgColor: {type: String, default: '#87CEFA'},
+    titleColor: {type: String, default: '#ffffff'},
     fixed: { type: Boolean, default: true },
     isFixed: { type: Boolean, default: false },
     rbWidth: { type: Number, default: 100 },

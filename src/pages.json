@@ -14,25 +14,31 @@
 		{
 			"path": "pages/shop/index",
 			"style": {
-				"navigationBarBackgroundColor": "#fff",
-				"navigationBarTextStyle": "black",
+				"navigationBarBackgroundColor": "#87CEFA",
+				"navigationBarTextStyle": "white",
 				"navigationBarTitleText": "商城中心"
 			}
 		},
 		{
 			"path": "pages/order/index",
 			"style": {
-				"navigationBarBackgroundColor": "#fff",
-				"navigationBarTextStyle": "black",
+				"navigationBarBackgroundColor": "#87CEFA",
+				"navigationBarTextStyle": "white",
 				"navigationBarTitleText": "订单中心"
 			}
 		},
 		{
 			"path": "pages/user/index",
 			"style": {
-				"navigationBarBackgroundColor": "#fff",
-				"navigationBarTextStyle": "black",
+				"navigationBarBackgroundColor": "#87CEFA",
+				"navigationBarTextStyle": "white",
 				"navigationBarTitleText": "用户中心"
+			}
+		},
+		{
+			"path": "pages/roomReservation/index",
+			"style": {
+				"navigationStyle": "custom"
 			}
 		}
 	],

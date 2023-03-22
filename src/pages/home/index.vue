@@ -53,7 +53,7 @@
       <!-- 店铺列表 -->
       <view class="shop-list">
         <view class="shop-list-title">请选择包间</view>
-        <view v-for="item in roomList" :key="item.id" class="mb-20">
+        <view v-for="item in roomList" :key="item.id" class="mb-20" @click="handleRoomCard(item)">
           <RoomCard
             :image="item.image"
             :name="item.name"
@@ -122,6 +122,11 @@ export default {
       ],
     };
   },
+  methods: {
+    handleRoomCard(item) {
+      this.handleNavTo({ url: `/pages/roomReservation/index?roomName=${item.name}&roomId=${item.id}` })
+    }
+  }
 };
 </script>
 

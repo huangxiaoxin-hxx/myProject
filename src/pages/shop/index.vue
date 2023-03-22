@@ -111,8 +111,7 @@
 					let mockData = ()=>{
 						let [left,main]=[[],[]];
 						
-						let size = Math.floor(Math.random()*40);
-						size = size < 20 ? 20 : size;
+						let size = 10;
 						for(let i=0;i<size;i++){
 							left.push(`${i+1}类商品`);
 							
@@ -188,10 +187,10 @@
 			/* 主区域滚动监听 */
 			mainScroll(e){
 				// 节流方法
-				clearTimeout(this.mainThrottle);
-				this.mainThrottle = setTimeout(()=>{
-					scrollFn();
-				},10);
+				// clearTimeout(this.mainThrottle);
+				// this.mainThrottle = setTimeout(()=>{
+				// 	scrollFn();
+				// },10);
 				
 				let scrollFn = ()=>{
 					let top =e.detail.scrollTop;
@@ -206,6 +205,7 @@
 					}
 					this.leftIndex=(index < 0 ? 0: index);
 				}
+				scrollFn();
 			},
 			/* 左侧导航点击 */
 			leftTap(e){
