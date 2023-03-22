@@ -27,10 +27,13 @@
 							</view>
 							<view class="goods" v-for="(item2,index2) in item.list" :key="index2">
 								<image src="/static/logo.png" mode=""></image>
-								<view>
-									<view>第{{index2+1}}个商品标题</view>
-									<view class="describe">第{{index2+1}}个商品的描述内容</view>
-									<view class="money">第{{index2+1}}个商品的价格</view>
+								<view class="flex1">
+									<view class="mb-20">{{ item2.name }}</view>
+									<!-- <view class="describe">第{{index2+1}}个商品的描述内容</view> -->
+									<view class="money">¥{{ item2.price }}</view>
+								</view>
+								<view class="number-box">
+									<CommonNumberBox :data="item2" @handleNumberChange="handleNumberChange" />
 								</view>
 							</view>
 						</view>
@@ -62,7 +65,8 @@
 				mainArray:[],
 				topArr:[],
 				leftIndex:0,
-				scrollInto:''
+				scrollInto:'',
+				selectList:[]
 			}
 		},
 		computed:{
@@ -111,12 +115,24 @@
 						for(let i=0;i<size;i++){
 							left.push(`${i+1}类商品`);
 							
-							let list=[];
-							let r = Math.floor(Math.random()*10);
-							r = r < 5 ? 5 : r;
-							for(let j=0;j<r;j++){
-								list.push(j);
-							}
+							let list=[
+								{
+									id: 1,
+									name: 'xx牌香烟',
+									price: '18.00'
+								},
+								{
+									id: 2,
+									name: 'xx牌香烟',
+									price: '20.00'
+								},
+								{
+									id: 3,
+									name: 'xx牌香烟',
+									price: '22.00'
+								},
+							];
+							
 							main.push({
 								title:`第${i+1}类商品标题`,
 								list
@@ -194,6 +210,15 @@
 			leftTap(e){
 				let index=e.currentTarget.dataset.index;
 				this.scrollInto=`item-${index}`;
+			},
+			handleNumberChange(data) {
+				console.log(data)
+				if(this.selectList.length === 0) {
+					this.selectList.push(data)
+				} else {
+					const list = this.selectList.filter(item => item.id !== data.id)
+					this.selectList = data.number !== 0 ? [...list, data] : list
+				}
 			}
 		}
 	}
@@ -346,8 +371,12 @@ page{
 			
 			.money{
 				font-size: 24rpx;
-				color: #efba21;
+				color: $uni-color-error;
 			}
+		}
+		.number-box {
+			width: 150rpx;
+			margin-right: 10rpx;
 		}
 	}
 }
