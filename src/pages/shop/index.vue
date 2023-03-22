@@ -45,10 +45,11 @@
 		<!-- 底部面板 -->
 		<view class="bottom-panel">
 			<!-- 底部面板，可添加所需要放在页面底部的内容代码。比如购物车栏目 -->
-			<view style="background-color: #ffaa00;text-align: center;font-size: 28rpx;padding: 10px 0;color: #fff;">
+			<!-- <view style="background-color: #ffaa00;text-align: center;font-size: 28rpx;padding: 10px 0;color: #fff;">
 				<view>这里底部内容占位区域，不需要则删除</view>
 				<view>可添加需放在页面底部的内容，比如购物车栏目</view>
-			</view>
+			</view> -->
+			<CommonShopCart :shopList="this.selectList" />
 		</view>
 	</view>
 	
@@ -117,17 +118,17 @@
 							
 							let list=[
 								{
-									id: 1,
+									id: `1${i}`,
 									name: 'xx牌香烟',
 									price: '18.00'
 								},
 								{
-									id: 2,
+									id: `2${i}`,
 									name: 'xx牌香烟',
 									price: '20.00'
 								},
 								{
-									id: 3,
+									id: `3${i}`,
 									name: 'xx牌香烟',
 									price: '22.00'
 								},
