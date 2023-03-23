@@ -3,11 +3,11 @@
     <view class="container">
       <!-- 店铺信息 -->
       <view class="shop-info">
-        <view class="shop-info-name"> 喜来発 </view>
+        <view class="shop-info-name"> {{ homeInfo.name }} </view>
         <view class="flex">
           <view class="shop-info-address flex1">
-            <view>营业时间: 24h</view>
-            <view>江西省抚州市南丰县</view>
+            <view>营业时间: {{ homeInfo.business_hours }}</view>
+            <view>{{ homeInfo.position && homeInfo.position.name }}</view>
           </view>
           <view class="navigation">
             <u-icon
@@ -32,7 +32,7 @@
       <!-- 轮播图 -->
       <view class="mb-20">
         <u-swiper
-          :list="list1"
+          :list="homeInfo.swiper"
           previousMargin="50"
           nextMargin="50"
           circular
@@ -44,7 +44,7 @@
       <!-- 通知信息 -->
       <view class="mb-20">
         <u-notice-bar
-          :text="text1"
+          :text="homeInfo.notice || ''"
           speed="30"
           bgColor="#F0F8FF"
           color="#00BFFF"
@@ -53,7 +53,12 @@
       <!-- 店铺列表 -->
       <view class="shop-list">
         <view class="shop-list-title">请选择包间</view>
-        <view v-for="item in roomList" :key="item.id" class="mb-20" @click="handleRoomCard(item)">
+        <view
+          v-for="item in roomList"
+          :key="item.id"
+          class="mb-20"
+          @click="handleRoomCard(item)"
+        >
           <RoomCard
             :image="item.image"
             :name="item.name"
@@ -64,7 +69,7 @@
       </view>
     </view>
     <template slot="gRTArea">
-      <view class="shop-switch">
+      <view class="shop-switch" @click="handleNavTo({ url: '/pages/selectBusiness/index'})">
         <p>切换</p>
         <p>店铺</p>
       </view>
@@ -75,6 +80,7 @@
 <script>
 import CommonPage from "@/components/CommonPage";
 import RoomCard from "@/components/RoomCard";
+import { getHomeData } from "@/serve/api";
 export default {
   name: "home",
   components: {
@@ -83,6 +89,7 @@ export default {
   },
   data() {
     return {
+      homeInfo: {},
       list1: [
         "https://cdn.uviewui.com/uview/swiper/swiper1.png",
         "https://cdn.uviewui.com/uview/swiper/swiper2.png",
@@ -124,9 +131,17 @@ export default {
   },
   methods: {
     handleRoomCard(item) {
-      this.handleNavTo({ url: `/pages/roomReservation/index?roomName=${item.name}&roomId=${item.id}` })
-    }
-  }
+      this.handleNavTo({
+        url: `/pages/roomReservation/index?roomName=${item.name}&roomId=${item.id}`,
+      });
+    },
+  },
+  onLoad() {
+    getHomeData().then((res) => {
+      this.homeInfo = res;
+      console.log(this.homeInfo);
+    });
+  },
 };
 </script>
 

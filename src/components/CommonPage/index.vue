@@ -85,6 +85,6 @@ export default {
   width: 100%;
   top: 0;
   z-index: 100;
-  background: #f1f1f1;
+  background: #fff;
 }
 </style>

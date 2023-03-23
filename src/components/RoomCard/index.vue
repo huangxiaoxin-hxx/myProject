@@ -35,7 +35,7 @@ export default {
   padding: 20rpx;
   border-radius: 10rpx;
   min-height: 350rpx;
-  // box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
   overflow: hidden;
   &-image {
     width: 200rpx;

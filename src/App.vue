@@ -17,6 +17,6 @@
 	@import "uview-ui/index.scss";
 	@import "@/common/common.scss";
 	page {
-		background: #f1f1f1;
+		background: #fff;
 	}
 </style>
