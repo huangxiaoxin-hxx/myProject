@@ -1,5 +1,5 @@
 <template>
-  <CommonPage navBarTitle="切换店铺">
+  <CommonPage navBarTitle="选择店铺">
     <view class="bg_color">
       <view class="search">
         <input
@@ -8,30 +8,94 @@
           placeholder="请输入店铺关键字"
           placeholder-style="color: rgba(255,255,255,0.7)"
           @input="searchBusiness"
+          v-model="keyword"
         />
       </view>
     </view>
+    <view class="position_height"></view>
+    <view class="business-list">
+      <view
+        class="business-list-item"
+        v-for="item in businessList"
+        :key="item.id"
+        @click="handleBusiness(item.id)"
+      >
+        <BusinessCard
+          :name="item.name"
+          :image="item.image"
+          :distance="item.distance"
+          :timer="item.timer"
+          :address="item.address"
+          :id="item.id"
+        />
+      </view>
+    </view>
+    <u-loadmore
+      :status="loading ? 'loading' : isMoreLoad ? 'loadmore' : 'nomore'" height="40"
+    />
   </CommonPage>
 </template>
 
 <script>
-import { getBusinessList } from '@/serve/api'
+import BusinessCard from "@/components/BusinessCard";
+import { getBusinessList } from "@/serve/api";
+import { setStorage } from '@/common'
 export default {
   name: "SelectBusiness",
+  components: {
+    BusinessCard,
+  },
   data() {
     return {
-      businessList: []
-    }
+      businessList: [],
+      pageInfo: {
+        page: 1,
+        pageSize: 10,
+        total: 0,
+      },
+      keyword: null,
+      loading: false,
+      loadStatus: "nomore",
+    };
   },
   methods: {
     searchBusiness(e) {
-      let fetch = async (keyword) => {
-        this.businessList = await getBusinessList({data:{ keyword }})
-      }
-      uni.$u.debounce(fetch(e.detail.value), 500)
+      this.keyword = e.detail.value;
+      this.pageInfo.page = 1;
+      uni.$u.debounce(() => this.fetchBusinessList(), 500);
     },
-
-  }
+    async fetchBusinessList() {
+      this.loading = true;
+      const res = await getBusinessList({
+        data: { keyword: this.keyword, ...this.pageInfo },
+      });
+      this.loading = false;
+      this.pageInfo.total = res.total;
+      if (this.pageInfo.page === 1) {
+        this.businessList = res.list;
+      } else {
+        this.businessList = [...this.businessList, ...res.list];
+      }
+    },
+    handleBusiness(id) {
+      setStorage('business_id', id)
+      this.handleNavTo({ type: 'switchTab', url: '/pages/home/index' })
+    }
+  },
+  created() {
+    this.fetchBusinessList({ data: this.pageInfo });
+  },
+  onReachBottom() {
+    if (!this.loading && this.isMoreLoad) {
+      this.pageInfo.page += 1;
+      this.fetchBusinessList();
+    }
+  },
+  computed: {
+    isMoreLoad() {
+      return this.pageInfo.page * this.pageInfo.pageSize < this.pageInfo.total;
+    },
+  },
 };
 </script>
 
@@ -58,6 +122,16 @@ export default {
     padding: 0 20rpx;
     box-sizing: border-box;
     color: #fff;
+  }
+}
+.position_height {
+  height: 132rpx;
+}
+.business-list {
+  padding: 40rpx 20rpx 0;
+  box-sizing: border-box;
+  &-item {
+    margin-bottom: 30rpx;
   }
 }
 </style>

@@ -69,7 +69,10 @@
       </view>
     </view>
     <template slot="gRTArea">
-      <view class="shop-switch" @click="handleNavTo({ url: '/pages/selectBusiness/index'})">
+      <view
+        class="shop-switch"
+        @click="handleNavTo({ url: '/pages/selectBusiness/index' })"
+      >
         <p>切换</p>
         <p>店铺</p>
       </view>
@@ -81,6 +84,7 @@
 import CommonPage from "@/components/CommonPage";
 import RoomCard from "@/components/RoomCard";
 import { getHomeData } from "@/serve/api";
+import { getStorage } from "@/common";
 export default {
   name: "home",
   components: {
@@ -136,8 +140,16 @@ export default {
       });
     },
   },
-  onLoad() {
-    getHomeData().then((res) => {
+  // onLoad({ id }) {
+  //   getHomeData({ data: { id } }).then((res) => {
+  //     this.homeInfo = res;
+  //     console.log(this.homeInfo);
+  //   });
+  // },
+  onShow() {
+    const id = getStorage("business_id");
+    if(!id) return
+    getHomeData({ data: { id } }).then((res) => {
       this.homeInfo = res;
       console.log(this.homeInfo);
     });
