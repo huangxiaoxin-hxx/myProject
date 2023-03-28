@@ -1,14 +1,14 @@
 <template>
 	<view class="center">
-		<view class="logo" @click="goLogin" :hover-class="!login ? 'logo-hover' : ''">
-			<image class="logo-img" :src="login ? uerInfo.avatarUrl :'../../static/user/defaultAvatar.png'"></image>
+		<view class="logo" @click="goLogin" :hover-class="!userInfo ? 'logo-hover' : ''">
+			<image class="logo-img" :src="userInfo ? userInfo.header :'../../static/user/defaultAvatar.png'"></image>
 			<view class="logo-title">
-				<text class="uer-name">Hi，{{login ? uerInfo.name : '您未登录'}}</text>
-				<text class="go-login navigat-arrow" v-if="!login">&#xe65e;</text>
+				<text class="uer-name">Hi，{{userInfo ? userInfo.user_name : '您未登录'}}</text>
+				<text class="go-login navigat-arrow" v-if="!userInfo">&#xe65e;</text>
 			</view>
 		</view>
 		<view class="center-list">
-			<view class="center-list-item border-bottom">
+			<view class="center-list-item border-bottom" @click="handleNavTo({url: '/pages/accountManage/index'})">
 				<text class="list-icon">&#xe60f;</text>
 				<text class="list-text">帐号管理</text>
 				<text class="navigat-arrow">&#xe65e;</text>
@@ -42,19 +42,26 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
 	export default {
 		data() {
 			return {
 				login: false,
-				uerInfo: {}
 			}
 		},
 		methods: {
+			...mapActions('user', ['fetchUserInfo']),
 			goLogin() {
-				if (!this.login) {
+				if (!this.userInfo) {
 					this.handleNavTo({url: '/pages/login/index'})
 				}
 			}
+		},
+		computed: {
+			...mapState('user', ['userInfo'])
+		},
+		onShow() {
+			this.fetchUserInfo()
 		}
 	}
 </script>

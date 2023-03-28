@@ -2,22 +2,26 @@
   <CommonPage navBarTitle="登录">
     <view class="container">
       <image src="@/static/logo.jpeg" class="logo"></image>
-      <u-button
+      <view class="login-button">
+        <u-button
         text="立即登录"
         shape="circle"
-        class="login-button"
         color="linear-gradient(to right, rgb(66, 83, 216), #87CEFA)"
         @click="handleUserInfo"
       ></u-button>
+      </view>
     </view>
   </CommonPage>
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 import { postLogin, postUserProfile } from '@/serve/api'
+import { setStorage } from '@/utils'
 export default {
   provider: 'weixin',
   methods: {
+    ...mapMutations('user', ['setUserInfo', 'setToken']),
     handleUserInfo() {
       uni.login({
         provider: "weixin",
@@ -37,6 +41,9 @@ export default {
                 iv
               })
               console.log(userInfo)
+              setStorage('token', userInfo.token)
+              this.setToken(userInfo.token)
+              this.setUserInfo(userInfo.user)
               this.handleNavBack();
             },
             fail: (err) => {
@@ -66,6 +73,9 @@ export default {
   .login-button {
     width: 80%;
     height: 88rpx;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
   }
 }
 </style>

@@ -3,6 +3,7 @@ import App from './App'
 import uView from "uview-ui";
 import "./common/mixin"
 import request from '@/config/request'
+import { $store } from "./store";
 
 Vue.use(uView);
 
@@ -36,7 +37,8 @@ uni.addInterceptor({
 });
 
 const app = new Vue({
-  ...App
+  ...App,
+  store: $store,
 })
 
 request(app)
