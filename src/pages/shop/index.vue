@@ -67,7 +67,7 @@
 				topArr:[],
 				leftIndex:0,
 				scrollInto:'',
-				selectList:[]
+				selectList:[],
 			}
 		},
 		computed:{
@@ -115,7 +115,8 @@
 						for(let i=0;i<size;i++){
 							left.push({
 								name: `${i+1}类商品`,
-								key: 'production'+i
+								key: 'production'+i,
+								number: 0,
 							});
 							
 							let list=[
@@ -224,7 +225,6 @@
 					const list = this.selectList.filter(item => item.id !== data.id)
 					this.selectList = data.number !== 0 ? [...list, data] : list
 				}
-				console.log(this.selectList)
 			}
 		}
 	}

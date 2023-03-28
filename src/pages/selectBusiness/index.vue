@@ -26,7 +26,7 @@
           :distance="item.distance"
           :timer="item.timer"
           :address="item.address"
-          :id="item.id"
+          :business_id="item.id"
         />
       </view>
     </view>

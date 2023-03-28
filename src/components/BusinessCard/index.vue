@@ -23,7 +23,7 @@ export default {
     distance: { type: String, default: null },
     timer: { type: String, default: null },
     address: { type: String, default: null },
-    id: { type: String | Number, default: null },
+    business_id: { type: String | Number, default: null },
   },
 };
 </script>
