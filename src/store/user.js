@@ -1,4 +1,4 @@
-import { getUserInfo } from '@/serve/api'
+import { getUserInfo, saveUserInfo } from '@/serve/api'
 
 const user = {
   namespaced: true,
@@ -18,6 +18,11 @@ const user = {
   actions: { 
     async fetchUserInfo({commit}) {
       const data = await getUserInfo()
+      commit('setUserInfo', data)
+    },
+    async updateUserInfo({commit}, params) {
+      const data = await saveUserInfo(params)
+      console.log(data)
       commit('setUserInfo', data)
     }
   },

@@ -16,17 +16,21 @@
           ></button>
           <!-- <image :src="userInfo[item.key]" /> -->
         </view>
-        <view class="context" v-else>
+        <view class="context" v-else @click="handleListItem(item.key)">
           {{ userInfo[item.key] }}
         </view>
         <u-icon name="arrow-right" color="#000" size="12"></u-icon>
       </view>
     </view>
+    <view class="login-out">
+      <u-button type="error" text="退出登录"></u-button>
+    </view>
+    <CommonInputName :show="showNickname" @cancel="handleNicknameCancel" @confirm="handleSaveNickname"/>
   </CommonPage>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 import { saveUserInfo } from '@/serve/api'
 const listData = [
   {
@@ -36,31 +40,51 @@ const listData = [
   },
   {
     name: "名字",
-    key: "user_name",
+    key: "nick_name",
     button: "获取微信名子",
   },
-  {
-    name: "手机号",
-    key: "mobile",
-    button: "获取手机号",
-  },
+  // {
+  //   name: "手机号",
+  //   key: "mobile",
+  //   button: "获取手机号",
+  // },
 ];
 export default {
   data() {
     return {
       listData: listData,
       loading: false,
+      showNickname: false
     };
   },
   computed: {
     ...mapState("user", ["userInfo"]),
   },
   methods: {
+    ...mapActions("user", ["updateUserInfo"]),
     async chooseAvatar(data) {
       console.log(data.detail);
       this.loading = true
-      await saveUserInfo({ header: data.detail.avatarUrl });
+      await this.updateUserInfo({ header: data.detail.avatarUrl });
       this.loading = false
+    },
+    async handleSaveNickname(nickname) {
+      this.showNickname = false
+      this.loading = true
+      await this.updateUserInfo({ nick_name: nickname });
+      this.loading = false
+    },
+    handleListItem(key) {
+      switch (key) {
+        case 'nick_name':
+          this.showNickname = true
+          break;
+        default:
+          break;
+      }
+    },
+    handleNicknameCancel() {
+      this.showNickname = false
     },
   },
 };
@@ -110,5 +134,12 @@ page {
       border-radius: 10rpx;
     }
   }
+}
+.login-out {
+  position: absolute;
+  bottom: 100rpx;
+  width: 400rpx;
+  left: 50%;
+  transform: translateX(-50%);
 }
 </style>

@@ -13,7 +13,6 @@ module.exports = (vm) => {
 		// 初始化请求拦截器时，会执行此方法，此时data为undefined，赋予默认{}
 		config.data = config.data || {}
 		const token = getStorage('token')
-		console.log(token)
 		// 根据custom参数中配置的是否需要token，添加对应的请求头
 		config.header.Authorization = `Bearer ${token}`
 	  return config 
@@ -29,10 +28,18 @@ module.exports = (vm) => {
 		const custom = response.config?.custom
 		if (data.code !== 200) { 
 			// 如果没有显式定义custom的toast参数为false的话，默认对报错进行toast弹出提示
-			if (custom.toast !== false) {
-				uni.$u.toast(data.message)
+			// if (custom.toast !== false) {
+			// 	uni.$u.toast(data.message)
+			// }
+			console.log(data)
+			if (data.code == 2001) {
+				uni.$u.toast('登录超时，请重新登录')
+				setTimeout(() => {
+					uni.navigateTo({
+						url: '/pages/login/index'
+					});
+				}, 1500);
 			}
-
 			// 如果需要catch返回，则进行reject
 			if (custom?.catch) {
 				return Promise.reject(data)

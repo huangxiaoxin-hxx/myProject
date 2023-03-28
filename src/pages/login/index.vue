@@ -1,5 +1,5 @@
 <template>
-  <CommonPage navBarTitle="登录">
+  <CommonPage navBarTitle="登录" :loading="loading">
     <view class="container">
       <image src="@/static/logo.jpeg" class="logo"></image>
       <view class="login-button">
@@ -20,9 +20,15 @@ import { postLogin, postUserProfile } from '@/serve/api'
 import { setStorage } from '@/utils'
 export default {
   provider: 'weixin',
+  data() {
+    return {
+      loading: false,
+    }
+  },
   methods: {
     ...mapMutations('user', ['setUserInfo', 'setToken']),
     handleUserInfo() {
+      this.loading = true
       uni.login({
         provider: "weixin",
         onlyAuthorize: true,
@@ -40,10 +46,10 @@ export default {
                 encryptedData,
                 iv
               })
-              console.log(userInfo)
               setStorage('token', userInfo.token)
               this.setToken(userInfo.token)
               this.setUserInfo(userInfo.user)
+              this.loading = false
               this.handleNavBack();
             },
             fail: (err) => {

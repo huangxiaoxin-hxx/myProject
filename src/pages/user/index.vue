@@ -3,7 +3,7 @@
 		<view class="logo" @click="goLogin" :hover-class="!userInfo ? 'logo-hover' : ''">
 			<image class="logo-img" :src="userInfo ? userInfo.header :'../../static/user/defaultAvatar.png'"></image>
 			<view class="logo-title">
-				<text class="uer-name">Hi，{{userInfo ? userInfo.user_name : '您未登录'}}</text>
+				<text class="uer-name">Hi，{{userInfo ? userInfo.nick_name : '您未登录'}}</text>
 				<text class="go-login navigat-arrow" v-if="!userInfo">&#xe65e;</text>
 			</view>
 		</view>
