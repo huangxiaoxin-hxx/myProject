@@ -26,12 +26,14 @@ export default {
       this.shopList.forEach(item => {
         total += item.price * item.number
       });
+      console.log(this.shopList)
       return total
     }
   },
   methods: {
     handleOrder() {
       // todo 下单
+      console.log(this.shopList)
     }
   }
 };

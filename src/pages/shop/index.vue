@@ -16,8 +16,8 @@
 							:id="'left-'+index"
 							:data-index="index"
 							@tap="leftTap"
-						>{{item}}</view>
-			        </scroll-view>
+						>{{item.name}}</view>
+			    </scroll-view>
 				</view>
 				<view class="main">
 					<scroll-view  scroll-y="true" :style="{ 'height':scrollHeight + 'px' }" @scroll="mainScroll" :scroll-into-view="scrollInto" :scroll-with-animation="false">
@@ -33,7 +33,7 @@
 									<view class="money">¥{{ item2.price }}</view>
 								</view>
 								<view class="number-box">
-									<CommonNumberBox :data="item2" @handleNumberChange="handleNumberChange" />
+									<CommonNumberBox :data="item2" :productionKey="item.key" @handleNumberChange="handleNumberChange" />
 								</view>
 							</view>
 						</view>
@@ -49,7 +49,7 @@
 				<view>这里底部内容占位区域，不需要则删除</view>
 				<view>可添加需放在页面底部的内容，比如购物车栏目</view>
 			</view> -->
-			<CommonShopCart :shopList="this.selectList" />
+			<CommonShopCart :shopList="selectList" />
 		</view>
 	</view>
 	
@@ -113,7 +113,10 @@
 						
 						let size = 10;
 						for(let i=0;i<size;i++){
-							left.push(`${i+1}类商品`);
+							left.push({
+								name: `${i+1}类商品`,
+								key: 'production'+i
+							});
 							
 							let list=[
 								{
@@ -135,7 +138,8 @@
 							
 							main.push({
 								title:`第${i+1}类商品标题`,
-								list
+								list,
+								key: 'production'+i
 							})
 						}
 						
@@ -215,11 +219,12 @@
 			handleNumberChange(data) {
 				console.log(data)
 				if(this.selectList.length === 0) {
-					this.selectList.push(data)
+					this.selectList = [data]
 				} else {
 					const list = this.selectList.filter(item => item.id !== data.id)
 					this.selectList = data.number !== 0 ? [...list, data] : list
 				}
+				console.log(this.selectList)
 			}
 		}
 	}

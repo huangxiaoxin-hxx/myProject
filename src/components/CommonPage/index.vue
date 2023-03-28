@@ -1,5 +1,5 @@
 <template>
-  <view class="page-container default-font-family">
+  <view class="page-container default-font-family" :style="{ paddingTop: isNavBar ? 0 : statusBarHeight + 'rpx' }">
     <view class="no-navbar-top" v-if="!isNavBar" :style="{ height: statusBarHeight + 'rpx' }"></view>
     <view v-if="isNavBar">
       <u-navbar

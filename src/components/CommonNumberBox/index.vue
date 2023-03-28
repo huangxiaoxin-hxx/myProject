@@ -19,7 +19,8 @@ export default {
     data: {
       type: Object,
       default: () => {}
-    }
+    },
+    productionKey: ''
   },
   data() {
     return {
@@ -28,7 +29,7 @@ export default {
   },
   methods: {
     handleNumberChange(e) {
-      this.$emit('handleNumberChange', {...this.data, number: e.value})
+      this.$emit('handleNumberChange', {...this.data, number: e.value, productionKey: this.productionKey})
     }
   }
 };
