@@ -1,15 +1,18 @@
 <template>
-  <CommonPage :isNavBar="false" :isFixed="true">
+  <CommonPage :isNavBar="false" :isFixed="true" :loading="loading">
     <view class="container">
       <!-- 店铺信息 -->
       <view class="shop-info">
         <view class="shop-info-name"> {{ homeInfo.name }} </view>
         <view class="flex">
           <view class="shop-info-address flex1">
-            <view>营业时间: {{ homeInfo.business_hours }}</view>
-            <view>{{ homeInfo.position && homeInfo.position.name }}</view>
+            <view
+              >营业时间:
+              {{ homeInfo.extend && homeInfo.extend.business_time }}</view
+            >
+            <view>{{ homeInfo.extend && homeInfo.extend.address }}</view>
           </view>
-          <view class="navigation">
+          <view class="navigation" @click="handleNavigation">
             <u-icon
               label="导航"
               labelPos="bottom"
@@ -18,7 +21,7 @@
               name="map-fill"
             ></u-icon>
           </view>
-          <view class="telephone">
+          <view class="telephone" @click="handleMobile">
             <u-icon
               label="电话"
               labelPos="bottom"
@@ -32,19 +35,19 @@
       <!-- 轮播图 -->
       <view class="mb-20">
         <u-swiper
-          :list="homeInfo.swiper"
+          :list="homeInfo.extend.image_arr"
           previousMargin="50"
           nextMargin="50"
           circular
           :autoplay="false"
           radius="5"
-          bgColor="#f1f1f1"
+          bgColor="#fff"
         ></u-swiper>
       </view>
       <!-- 通知信息 -->
       <view class="mb-20">
         <u-notice-bar
-          :text="homeInfo.notice || ''"
+          :text="notice.title"
           speed="30"
           bgColor="#F0F8FF"
           color="#00BFFF"
@@ -60,12 +63,17 @@
           @click="handleRoomCard(item)"
         >
           <RoomCard
+            :roomId="item.id"
             :image="item.image"
             :name="item.name"
-            :desc="item.desc"
-            :isUse="item.isUse"
+            :desc="item.label"
+            :isUse="item.room_use_state"
           />
         </view>
+      </view>
+      <!-- 底部底线 -->
+      <view class="no-more">
+        <u-loadmore status="nomore" :line="true" />
       </view>
     </view>
     <template slot="gRTArea">
@@ -84,7 +92,7 @@
 import CommonPage from "@/components/CommonPage";
 import RoomCard from "@/components/RoomCard";
 import { getHomeData } from "@/serve/api";
-import { getStorage } from "@/common";
+import { getStorage, setStorage } from "@/common";
 export default {
   name: "home",
   components: {
@@ -94,43 +102,9 @@ export default {
   data() {
     return {
       homeInfo: {},
-      list1: [
-        "https://cdn.uviewui.com/uview/swiper/swiper1.png",
-        "https://cdn.uviewui.com/uview/swiper/swiper2.png",
-        "https://cdn.uviewui.com/uview/swiper/swiper3.png",
-      ],
-      text1:
-        "uView UI众多组件覆盖开发过程的各个需求，组件功能丰富，多端兼容。让您快速集成，开箱即用",
-      roomList: [
-        {
-          id: 1,
-          image: "https://cdn.uviewui.com/uview/swiper/swiper1.png",
-          name: "1号包间",
-          desc: ["超大空间", "旋翼麻将机", "新风系统", "饮水机"],
-          isUse: false,
-        },
-        {
-          id: 2,
-          image: "https://cdn.uviewui.com/uview/swiper/swiper1.png",
-          name: "2号包间",
-          desc: ["超大空间", "旋翼麻将机", "新风系统", "饮水机"],
-          isUse: true,
-        },
-        {
-          id: 3,
-          image: "https://cdn.uviewui.com/uview/swiper/swiper1.png",
-          name: "3号包间",
-          desc: ["超大空间", "旋翼麻将机", "新风系统", "饮水机"],
-          isUse: false,
-        },
-        {
-          id: 4,
-          image: "https://cdn.uviewui.com/uview/swiper/swiper1.png",
-          name: "4号包间",
-          desc: ["超大空间", "旋翼麻将机", "新风系统", "饮水机"],
-          isUse: true,
-        },
-      ],
+      roomList: [],
+      loading: false,
+      notice: [],
     };
   },
   methods: {
@@ -139,20 +113,49 @@ export default {
         url: `/pages/roomReservation/index?roomName=${item.name}&roomId=${item.id}`,
       });
     },
+    handleMobile() {
+      uni.makePhoneCall({
+        phoneNumber: this.homeInfo.mobile, //仅为示例
+      });
+    },
+    handleNavigation() {
+      uni.openLocation({
+			latitude: parseFloat(this.homeInfo.extend.lat),
+			longitude: parseFloat(this.homeInfo.extend.lng),
+			success: function () {
+				console.log('success');
+			}
+		});
+    }
   },
-  // onLoad({ id }) {
-  //   getHomeData({ data: { id } }).then((res) => {
-  //     this.homeInfo = res;
-  //     console.log(this.homeInfo);
-  //   });
-  // },
-  onShow() {
+  async onLoad({ id }) {
+    if (id) {
+      setStorage("business_id", id);
+      this.loading = true;
+      try {
+        const data = await getHomeData({ data: { id } });
+        this.homeInfo = data.shop_info;
+        this.roomList = data.room_list;
+        this.notice = data.article;
+      } finally {
+        this.loading = false;
+      }
+    }
+  },
+  async onShow() {
     const id = getStorage("business_id");
-    if(!id) return
-    getHomeData({ data: { id } }).then((res) => {
-      this.homeInfo = res;
-      console.log(this.homeInfo);
-    });
+    if (!id) {
+      this.handleNavTo({ url: "/pages/selectBusiness/index" });
+      return;
+    }
+    try {
+      const data = await getHomeData({ data: { id } });
+      this.homeInfo = data.shop_info;
+      this.roomList = data.room_list;
+      this.notice = data.article;
+    } finally {
+      this.loading = false;
+    }
   },
 };
 </script>
@@ -210,5 +213,10 @@ export default {
     font-size: 32rpx;
     margin-bottom: 30rpx;
   }
+}
+.no-more {
+  height: 100rpx;
+  display: flex;
+  align-items: center;
 }
 </style>
