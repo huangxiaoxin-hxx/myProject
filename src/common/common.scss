@@ -7,6 +7,9 @@
 .flex1 {
   flex: 1;
 }
+.al-center {
+  align-items: center;
+}
 .mb-10 {
   margin-bottom: 10rpx;
 }
@@ -19,6 +22,21 @@
 .ml-15 {
   margin-left: 15rpx;
 }
+.mr-10 {
+  margin-right: 10rpx;
+}
+.tar {
+  text-align: right;
+}
 .font-12 {
   font-size: 24rpx;
+}
+.font-14 {
+  font-size: 28rpx;
+}
+.w-100 {
+  width: 100rpx;
+}
+.price-color {
+  color: #dd524d;
 }
