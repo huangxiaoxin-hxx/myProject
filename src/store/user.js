@@ -24,7 +24,10 @@ const user = {
       const data = await saveUserInfo(params)
       console.log(data)
       commit('setUserInfo', data)
-    }
+    },
+    logout({ commit }) {
+      commit("clean", null, { root: true });
+    },
   },
   getters: {  }
 }

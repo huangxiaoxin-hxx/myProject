@@ -23,7 +23,7 @@
       </view>
     </view>
     <view class="login-out">
-      <u-button type="error" text="退出登录"></u-button>
+      <u-button @click="handleLogout" type="error" text="退出登录"></u-button>
     </view>
     <CommonInputName :show="showNickname" @cancel="handleNicknameCancel" @confirm="handleSaveNickname"/>
   </CommonPage>
@@ -31,7 +31,7 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
-import { saveUserInfo } from '@/serve/api'
+import { removeStorage } from '@/utils'
 const listData = [
   {
     name: "头像",
@@ -61,7 +61,7 @@ export default {
     ...mapState("user", ["userInfo"]),
   },
   methods: {
-    ...mapActions("user", ["updateUserInfo"]),
+    ...mapActions("user", ["updateUserInfo", "logout"]),
     async chooseAvatar(data) {
       console.log(data.detail);
       this.loading = true
@@ -86,6 +86,13 @@ export default {
     handleNicknameCancel() {
       this.showNickname = false
     },
+    handleLogout() {
+      this.loading = true
+      this.logout()
+      removeStorage('token')
+      this.loading = false
+      this.handleNavTo({type: 'switchTab', url: '/pages/home/index'})
+    }
   },
 };
 </script>
