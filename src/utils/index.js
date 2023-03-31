@@ -27,3 +27,7 @@ export function getStorage(key, defaultVal = null) {
   }
   return val !== "" ? val : defaultVal;
 }
+
+export function haveMonthDate(date) {
+  return moment(date).format("MM-DD")
+}

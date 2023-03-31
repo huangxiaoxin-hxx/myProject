@@ -2,7 +2,7 @@
   <CommonPage :navBarTitle="`${roomName}预约`">
     <view class="container">
       <view class="room">
-        <view class="room-info flex">
+        <view class="room-info flex mb-50">
           <u-image
             width="180rpx"
             height="180rpx"
@@ -30,20 +30,28 @@
             </view>
           </view>
         </view>
+        <view class="room-reservation">
+          <ReservationCard :reservationList="reservationList" />
+        </view>
       </view>
     </view>
   </CommonPage>
 </template>
 
 <script>
+import ReservationCard from "@/components/ReservationCard"
 import { getRoomInfo } from "@/serve/api";
 export default {
   name: "RoomReservation",
+  components: {
+    ReservationCard
+  },
   data() {
     return {
       roomName: null,
       roomInfo: null,
-      roomPrice: []
+      roomPrice: [],
+      reservationList: []
     };
   },
   async onLoad({ roomName, roomId }) {
@@ -51,7 +59,9 @@ export default {
     // todo 请求room预约数据
     const data = await getRoomInfo({ data: { room_id: roomId } });
     this.roomInfo = data.room;
-    this.roomPrice = data.room_price;
+    // this.roomPrice = data.room_price;
+    this.reservationList = data.yuYueList;
+
   },
   computed: {},
 };
@@ -94,6 +104,13 @@ export default {
       &-item {
         margin: 10rpx;
       }
+    }
+    &-reservation {
+      width: 100%;
+      height: 200rpx;
+      border-radius: 10rpx 10rpx 0 0;
+      background: #fff;
+      overflow: hidden;
     }
   }
 }
