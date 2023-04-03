@@ -107,10 +107,10 @@ export default {
     }
     &-reservation {
       width: 100%;
-      height: 200rpx;
       border-radius: 10rpx 10rpx 0 0;
       background: #fff;
       overflow: hidden;
+      min-height: 200rpx;
     }
   }
 }

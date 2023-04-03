@@ -1,4 +1,5 @@
 import Vue from "vue";
+import moment from "moment";
 
 Vue.mixin({
   methods: {
@@ -41,6 +42,13 @@ Vue.mixin({
           });
         }
       });
+    }
+  },
+  filters: {
+    getTimeHHMM: function (value) {
+      console.log(value)
+      if (!value) return ''
+      return moment(value).format("HH:MM")
     }
   }
 });

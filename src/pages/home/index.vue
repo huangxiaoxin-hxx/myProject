@@ -72,7 +72,7 @@
         </view>
       </view>
       <!-- 底部底线 -->
-      <view class="no-more">
+      <view class="no-more" v-if="!loading">
         <u-loadmore status="nomore" :line="true" />
       </view>
     </view>
