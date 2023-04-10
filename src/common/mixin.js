@@ -46,9 +46,12 @@ Vue.mixin({
   },
   filters: {
     getTimeHHMM: function (value) {
-      console.log(value)
       if (!value) return ''
       return moment(value).format("HH:MM")
+    },
+    getDate: function (value) {
+      if (!value) return ''
+      return moment(value).format("MM/DD")
     }
   }
 });

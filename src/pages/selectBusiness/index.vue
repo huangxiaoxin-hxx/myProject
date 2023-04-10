@@ -22,7 +22,7 @@
       >
         <BusinessCard
           :name="item.name"
-          :image="item.image"
+          :image="item.logo"
           :distance="item.distance"
           :timer="item.timer"
           :address="item.address"
@@ -72,9 +72,9 @@ export default {
       this.loading = false;
       this.pageInfo.total = res.total;
       if (this.pageInfo.page === 1) {
-        this.businessList = res.list;
+        this.businessList = res.data;
       } else {
-        this.businessList = [...this.businessList, ...res.list];
+        this.businessList = [...this.businessList, ...res.data];
       }
     },
     handleBusiness(id) {

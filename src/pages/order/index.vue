@@ -12,100 +12,7 @@
 </template>
 
 <script>
-const orderList = [
-  {
-    business_name: '张三棋牌室',
-    state: '已完成',
-    id: 1,
-    shop_list: [
-      {
-        order_image: 'https://cdn.uviewui.com/uview/album/1.jpg',
-        shop_name: 'xx牌香烟',
-        price: '18.00',
-        id: 1,
-        number: 1
-      },
-      {
-        order_image: 'https://cdn.uviewui.com/uview/album/1.jpg',
-        shop_name: 'xx牌香烟',
-        price: '20.00',
-        id: 2,
-        number: 1
-      },
-    ],
-    shop_number: 2,
-    total_price: '38.00'
-  },
-  {
-    business_name: '张三棋牌室',
-    state: '待支付',
-    id: 2,
-    shop_list: [
-      {
-        order_image: 'https://cdn.uviewui.com/uview/album/1.jpg',
-        shop_name: 'xx牌香烟',
-        price: '18.00',
-        number: 1,
-        id: 1
-      },
-      {
-        order_image: 'https://cdn.uviewui.com/uview/album/1.jpg',
-        shop_name: 'xx牌香烟',
-        price: '20.00',
-        number: 1,
-        id: 2
-      },
-    ],
-    shop_number: 2,
-    total_price: '38.00'
-  },
-  {
-    business_name: '张三棋牌室',
-    state: '待使用',
-    id: 3,
-    shop_list: [
-      {
-        order_image: 'https://cdn.uviewui.com/uview/album/1.jpg',
-        shop_name: 'xx牌香烟',
-        price: '18.00',
-        number: 1,
-        id: 1
-      },
-      {
-        order_image: 'https://cdn.uviewui.com/uview/album/1.jpg',
-        shop_name: 'xx牌香烟',
-        price: '20.00',
-        number: 1,
-        id: 2
-      },
-    ],
-    shop_number: 2,
-    total_price: '38.00'
-  },
-  {
-    business_name: '张三棋牌室',
-    state: '使用中',
-    id: 4,
-    shop_list: [
-      {
-        order_image: 'https://cdn.uviewui.com/uview/album/1.jpg',
-        shop_name: '豪华包间3号',
-        price: '50.00',
-        number: 1,
-        id: 1
-      },
-      {
-        order_image: 'https://cdn.uviewui.com/uview/album/1.jpg',
-        shop_name: '豪华包间1号',
-        price: '30.00',
-        number: 1,
-        id: 2
-      },
-    ],
-    shop_number: 2,
-    total_price: '38.00'
-  },
-]
+import { getOrderList } from '@/serve/api'
 export default {
   name: "Order",
   data() {
@@ -114,31 +21,60 @@ export default {
         {
           name: "全部",
           id: 1,
+          type: 'all'
         },
         {
           name: "未使用",
           id: 2,
+          type: 'wait_use'
         },
         {
           name: "已完成",
           id: 3,
+          type: 'complete'
         },
         {
           name: "使用中",
           id: 4,
+          type: 'using'
         },
         {
           name: "待支付",
-          id: 5
+          id: 5,
+          type: 'wait_pay'
         }
       ],
-      orderList: orderList
+      orderList: [],
+      type: 'all',
+      pageInfo: {
+        page: 1,
+        limit: 10
+      },
+      total: 0
     };
   },
   methods: {
     handleOrderType(item) {
-      console.log(item)
-    }
+      this.type = item.type
+    },
+    async fetchBusinessList() {
+      this.loading = true;
+      const res = await getOrderList({
+        data: { type: this.type, ...this.pageInfo },
+      });
+      this.loading = false;
+      this.total = res.total;
+      if (this.pageInfo.page === 1) {
+        this.businessList = res.data;
+      } else {
+        this.businessList = [...this.businessList, ...res.data];
+      }
+    },
+  },
+  async onShow() {
+    console.log('res')
+    const res = await getOrderList({data: {type: this.type}})
+    console.log(res)
   }
 };
 </script>

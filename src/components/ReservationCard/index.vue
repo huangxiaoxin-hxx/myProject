@@ -26,6 +26,7 @@
     <view class="reservation-card-comment">
       <view
         class="reservation-card-comment-item"
+        :class="isSelect(item) && 'reservation-card-comment-item__selected'"
         v-for="(item) in firstReservationList"
         :key="item.id"
         @click="handlePickTime(item)"
@@ -76,15 +77,28 @@ export default {
     },
   },
   methods: {
-    handleSelectReservation(item) {
-      this.selectDateList = item.comment;
+    handleSelectReservation(data) {
+      this.selectDateList = data.comment;
     },
-    handlePickTime(item) {
-      if (item.yuyue_state === 1) {
+    handlePickTime(data) {
+      if (data.yuyue_state === 1) {
         uni.showToast({ title: "抱歉，该场次已被预约", icon: "none" });
         return;
       }
+      const index = this.pickTime.indexOf(data)
+      if(index !== -1) {
+        this.pickTime.splice(index, 1)
+      } else {
+        this.pickTime.push(data)
+      }
+      this.$emit('handlePickTime', this.pickTime)
     },
+    isSelect(data) {
+      if(this.pickTime.includes(data)) {
+        return true
+      }
+      return false
+    }
   },
 };
 </script>
@@ -106,6 +120,11 @@ export default {
       text-align: center;
       &:nth-child(3n + 3) {
         margin-right: 0;
+      }
+      &__selected {
+        border: 1px solid #87CEFA;
+        background-color: #87CEFA;
+        color: #fff;
       }
       .title {
         font-size: 28rpx;
