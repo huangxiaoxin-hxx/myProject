@@ -47,6 +47,7 @@
 </template>
 
 <script>
+
 export default {
   name: "ShopCart",
   data() {
@@ -77,9 +78,15 @@ export default {
     },
   },
   methods: {
-    handleOrder() {
+    async handleOrder() {
       // todo 下单
-      console.log(this.shopList);
+      if(this.shopList.length === 0) {
+        uni.showToast({title: '请选择需要购买的商品', icon: 'none'})
+        return
+      }
+      // console.log(this.shopList);
+      // await postCartInstallAll(this.shopList)
+      this.$emit('handleOrder')
     },
     handleOrderList() {
       if (this.totalNumber > 0) {

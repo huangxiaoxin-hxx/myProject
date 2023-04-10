@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import user from './user'
+import home from './home'
 
 Vue.use(Vuex)
 
@@ -25,7 +26,8 @@ const store = {
     },
   },
   modules: {
-    user
+    user,
+    home
   }
 }
 

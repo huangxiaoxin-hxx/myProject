@@ -35,7 +35,7 @@
       <!-- 轮播图 -->
       <view class="mb-20">
         <u-swiper
-          :list="homeInfo.extend.image_arr"
+          :list="homeInfo.extend && homeInfo.extend.image_arr"
           previousMargin="50"
           nextMargin="50"
           circular
@@ -93,6 +93,7 @@ import CommonPage from "@/components/CommonPage";
 import RoomCard from "@/components/RoomCard";
 import { getHomeData } from "@/serve/api";
 import { getStorage, setStorage } from "@/common";
+import { mapMutations } from "vuex";
 export default {
   name: "home",
   components: {
@@ -108,6 +109,7 @@ export default {
     };
   },
   methods: {
+    ...mapMutations('home', ['setRoomList']),
     handleRoomCard(item) {
       this.handleNavTo({
         url: `/pages/roomReservation/index?roomName=${item.name}&roomId=${item.id}`,
@@ -137,6 +139,7 @@ export default {
         this.homeInfo = data.shop_info;
         this.roomList = data.room_list;
         this.notice = data.article;
+        this.setRoomList(data.room_list)
       } finally {
         this.loading = false;
       }
@@ -153,6 +156,7 @@ export default {
       this.homeInfo = data.shop_info;
       this.roomList = data.room_list;
       this.notice = data.article;
+      this.setRoomList(data.room_list)
     } finally {
       this.loading = false;
     }

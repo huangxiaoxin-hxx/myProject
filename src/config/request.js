@@ -27,11 +27,11 @@ module.exports = (vm) => {
 		// 自定义参数
 		const custom = response.config?.custom
 		if (data.code !== 200) { 
+			console.log(data)
 			// 如果没有显式定义custom的toast参数为false的话，默认对报错进行toast弹出提示
 			// if (custom.toast !== false) {
 			// 	uni.$u.toast(data.message)
 			// }
-			console.log(data)
 			if (data.code == 2001) {
 				uni.$u.toast('登录超时，请重新登录')
 				setTimeout(() => {
@@ -39,6 +39,10 @@ module.exports = (vm) => {
 						url: '/pages/login/index'
 					});
 				}, 1500);
+			}
+			if(data.code === 0) {
+				uni.$u.toast(data.msg)
+				return Promise.reject(data)
 			}
 			// 如果需要catch返回，则进行reject
 			if (custom?.catch) {

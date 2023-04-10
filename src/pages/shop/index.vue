@@ -45,10 +45,10 @@
                 :key="index2"
               >
                 <u-image
-                  src="https://cdn.uviewui.com/uview/album/1.jpg"
+                  :src="item.thumb_photo"
                   width="120rpx"
                   height="120rpx"
-									radius="4"
+                  radius="4"
                   :lazy-load="true"
                 ></u-image>
                 <view class="flex1 ml-15">
@@ -80,12 +80,26 @@
 				<view>这里底部内容占位区域，不需要则删除</view>
 				<view>可添加需放在页面底部的内容，比如购物车栏目</view>
 			</view> -->
-      <CommonShopCart :shopList="selectList" />
+      <CommonShopCart :shopList="selectList" @handleOrder="handleOrder" />
+    </view>
+    <view class="picker">
+      <u-picker
+        title="请选择需要送达的房间"
+        ref="uPicker"
+        :show="showPicker"
+        :columns="[roomList]"
+        keyName="name"
+        @confirm="handleSelectRoom"
+        @cancel="showPicker = false"
+      ></u-picker>
     </view>
   </view>
 </template>
 
 <script>
+import { getGoodsList, postCartInstallAll, createOrder } from "@/serve/api";
+import { getStorage } from "@/utils";
+import { mapState } from "vuex";
 export default {
   data() {
     return {
@@ -98,9 +112,12 @@ export default {
       leftIndex: 0,
       scrollInto: "",
       selectList: [],
+      showPicker: false,
+      columns: [],
     };
   },
   computed: {
+    ...mapState("home", ["roomList"]),
     /* 计算左侧滚动位置定位 */
     leftIntoView() {
       return `left-${this.leftIndex > 3 ? this.leftIndex - 3 : 0}`;
@@ -135,62 +152,37 @@ export default {
     /* 获取列表数据 */
     getListData() {
       // Promise 为 ES6 新增的API ，有疑问的请自行学习该方法的使用。
-      new Promise((resolve, reject) => {
+      new Promise(async (resolve, reject) => {
         /* 因无真实数据，当前方法模拟数据。正式项目中将此处替换为 数据请求即可 */
         uni.showLoading();
 
         // 模拟数据
-        let mockData = () => {
+        let mockData = async () => {
+          const shop_id = getStorage("business_id");
+          const data = (await getGoodsList({ data: { shop_id } })) || [];
           let [left, main] = [[], []];
-
-          let size = 10;
-          for (let i = 0; i < size; i++) {
+          data.map((item, index) => {
             left.push({
-              name: `${i + 1}类商品`,
-              key: "production" + i,
-              number: 0,
+              name: item.name,
+              key: "production" + index,
             });
-
-            let list = [
-              {
-                id: `1${i}`,
-                name: "xx牌香烟",
-                price: "18.00",
-              },
-              {
-                id: `2${i}`,
-                name: "xx牌香烟",
-                price: "20.00",
-              },
-              {
-                id: `3${i}`,
-                name: "xx牌香烟",
-                price: "22.00",
-              },
-            ];
-
             main.push({
-              title: `第${i + 1}类商品标题`,
-              list,
-              key: "production" + i,
+              title: `${item.name}商品`,
+              list: item.goods_list,
+              key: "production" + index,
             });
-          }
+          });
 
           return {
             left,
             main,
           };
         };
-        setTimeout(() => {
-          let res = mockData();
-          let { left, main } = res;
-          // 将请求接口返回的数据传递给 Promise 对象的 then 函数。
-          resolve({ left, main });
-        }, 1000);
+        let res = await mockData();
+        let { left, main } = res;
+        // 将请求接口返回的数据传递给 Promise 对象的 then 函数。
+        resolve({ left, main });
       }).then((res) => {
-        console.log("-----------请求接口返回数据示例-------------");
-        console.log(res);
-
         uni.hideLoading();
         this.leftArray = res.left;
         this.mainArray = res.main;
@@ -252,7 +244,6 @@ export default {
       this.scrollInto = `item-${index}`;
     },
     handleNumberChange(data) {
-      console.log(data);
       if (this.selectList.length === 0) {
         this.selectList = [data];
       } else {
@@ -260,6 +251,26 @@ export default {
         this.selectList = data.number !== 0 ? [...list, data] : list;
       }
     },
+    async handleOrder() {
+      this.showPicker = true;
+    },
+    async handleSelectRoom(e) {
+      const room_id = e.value[0].id
+      this.showPicker = false
+      const data = this.selectList.map(item => ({
+        goods_id: item.id,
+        num: item.number,
+        is_check: 1
+      }))
+      uni.showLoading({title: '订单生成中', mask: true})
+      try {
+        await postCartInstallAll(data)
+        this.selectList = []
+        const order = await createOrder({ room_id })
+      } finally {
+        uni.hideLoading()
+      }
+    }
   },
 };
 </script>
@@ -416,4 +427,8 @@ page {
     }
   }
 }
+// .picker {
+//   position: absolute;
+//   bottom: 0;
+// }
 </style>
