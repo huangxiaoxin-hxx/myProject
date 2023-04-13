@@ -102,12 +102,13 @@ export default {
     const data = await getRoomInfo({ data: { room_id: roomId } });
     this.roomInfo = data.room;
     this.roomPrice = data.yuYueList[0].room_yuyue;
-    this.reservationList = data.yuYueList;
-    this.reservationList.map(item => {
+    data.yuYueList.map(item => {
       item.room_yuyue.map(item2 => {
         item2.date = item.date
       })
     })
+    this.reservationList = data.yuYueList;
+    console.log(this.reservationList)
   },
   computed: {
     totalPrice() {

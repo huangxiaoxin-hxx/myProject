@@ -35,30 +35,12 @@
 				"navigationBarTitleText": "用户中心"
 			}
 		},
-		// {
-		// 	"path": "pages/roomReservation/index",
-		// 	"style": {
-		// 		"navigationStyle": "custom"
-		// 	}
-		// },
-		// {
-		// 	"path": "pages/selectBusiness/index",
-		// 	"style": {
-		// 		"navigationStyle": "custom"
-		// 	}
-		// },
 		{
 			"path": "pages/login/index",
 			"style": {
 				"navigationStyle": "custom"
 			}
 		}
-		// {
-		// 	"path": "pages/accountManage/index",
-		// 	"style": {
-		// 		"navigationStyle": "custom"
-		// 	}
-		// }
 	],
 	"subPackages": [{
 		"root": "pageHome",

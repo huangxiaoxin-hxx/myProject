@@ -3,14 +3,14 @@
     <view class="container">
       <!-- 店铺信息 -->
       <view class="shop-info">
-        <view class="shop-info-name"> {{ homeInfo.name }} </view>
+        <view class="shop-info-name"> {{ homeInfo.name || "请选择店铺" }} </view>
         <view class="flex">
           <view class="shop-info-address flex1">
             <view
               >营业时间:
-              {{ homeInfo.extend && homeInfo.extend.business_time }}</view
+              {{ homeInfo.extend && homeInfo.extend.business_time || "" }}</view
             >
-            <view>{{ homeInfo.extend && homeInfo.extend.address }}</view>
+            <view>{{ homeInfo.extend && homeInfo.extend.address || "" }}</view>
           </view>
           <view class="navigation" @click="handleNavigation">
             <u-icon
