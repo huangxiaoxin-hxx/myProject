@@ -148,7 +148,7 @@ export default {
   async onShow() {
     const id = getStorage("business_id");
     if (!id) {
-      this.handleNavTo({ url: "/pages/selectBusiness/index" });
+      this.handleNavTo({ url: "/pageHome/selectBusiness/index" });
       return;
     }
     try {
