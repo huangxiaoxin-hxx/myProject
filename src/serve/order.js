@@ -5,3 +5,6 @@ export const getOrderList = (data) => http.get('/shop/order/list', data)
 
 // post 创建订单 
 export const createOrder = (params, config = {}) => http.post('/shop/buy/createOrder', params, config)
+
+// 微信支付预请求订单
+export const postPayOrder = (params, config = {}) => http.post('/mini/pay/createOrder', params, config)

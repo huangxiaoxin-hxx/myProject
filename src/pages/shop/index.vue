@@ -61,6 +61,7 @@
                     :data="item2"
                     :productionKey="item.key"
                     @handleNumberChange="handleNumberChange"
+                    ref="commonNumberBox"
                   />
                 </view>
               </view>
@@ -97,9 +98,10 @@
 </template>
 
 <script>
-import { getGoodsList, postCartInstallAll, createOrder } from "@/serve/api";
+import { getGoodsList, postCartInstallAll, createOrder, postPayOrder } from "@/serve/api";
 import { getStorage } from "@/utils";
 import { mapState } from "vuex";
+import { weixinPay } from '@/utils/pay.js'
 export default {
   data() {
     return {
@@ -264,9 +266,22 @@ export default {
       }))
       uni.showLoading({title: '订单生成中', mask: true})
       try {
-        await postCartInstallAll(data)
+        await postCartInstallAll({list: data})
         this.selectList = []
         const order = await createOrder({ room_id })
+        this.$refs.commonNumberBox.map(item => {
+          if(item.value != 0) {
+            item.handleResetValue()
+          }
+        })
+        const res = await postPayOrder({ order_sn: order.order_sn })
+        const success = (res) => {
+          console.log(res)
+        }
+        const { nonceStr, package: packageId, timeStamp, paySign, signType} = res
+        weixinPay({
+          timeStamp, nonceStr, packageId, signType, paySign, success
+        })
       } finally {
         uni.hideLoading()
       }

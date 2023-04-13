@@ -30,6 +30,9 @@ export default {
   methods: {
     handleNumberChange(e) {
       this.$emit('handleNumberChange', {...this.data, number: e.value, productionKey: this.productionKey})
+    },
+    handleResetValue() {
+      this.value = 0
     }
   }
 };
