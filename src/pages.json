@@ -67,18 +67,26 @@
 			"style": {
 				"navigationStyle": "custom"
 			}
-		},
-		{
-			"path": "selectBusiness/index",
-			"style": {
-				"navigationStyle": "custom"
+			},
+			{
+				"path": "selectBusiness/index",
+				"style": {
+					"navigationStyle": "custom"
+				}
 			}
-		}
-	]
+		]
 	}, {
 		"root": "pageUser",
 		"pages": [{
 			"path": "accountManage/index",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		}]
+	}, {
+		"root": "pageOrder",
+		"pages": [{
+			"path": "orderDetail/index",
 			"style": {
 				"navigationStyle": "custom"
 			}

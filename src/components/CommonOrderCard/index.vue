@@ -31,6 +31,9 @@
       <span class="price-color font-14">¥{{ orderData.order_total }}</span>
     </view>
     <view class="order-card-footer">
+      <view class="order-card-footer-btn ml-20">
+        <u-button type="primary" :plain="true" text="查看详情" size="small" @click="handleNavTo({url: '/pageOrder/orderDetail/index?orderId='+orderData.order_sn})"></u-button>
+      </view>
       <view class="order-card-footer-btn" v-if="orderData.pay_state === 0">
         <u-button type="primary" :plain="true" text="去支付" size="small" @click="handlePay"></u-button>
       </view>
