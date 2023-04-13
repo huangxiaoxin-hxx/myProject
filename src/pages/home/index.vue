@@ -79,7 +79,7 @@
     <template slot="gRTArea">
       <view
         class="shop-switch"
-        @click="handleNavTo({ url: '/pages/selectBusiness/index' })"
+        @click="handleNavTo({ url: '/pageHome/selectBusiness/index' })"
       >
         <p>切换</p>
         <p>店铺</p>
@@ -112,7 +112,7 @@ export default {
     ...mapMutations('home', ['setRoomList']),
     handleRoomCard(item) {
       this.handleNavTo({
-        url: `/pages/roomReservation/index?roomName=${item.name}&roomId=${item.id}`,
+        url: `/pageHome/roomReservation/index?roomName=${item.name}&roomId=${item.id}`,
       });
     },
     handleMobile() {

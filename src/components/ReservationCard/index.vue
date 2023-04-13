@@ -34,8 +34,8 @@
         <view class="state">{{ item.yuyue_state_text }}</view>
         <view class="title">{{ item.title }}</view>
         <view class="timer"
-          >{{ item.start_time | getTimeHHMM }}-{{
-            item.end_time | getTimeHHMM
+          >{{ item.start_time | delSecond }}-{{
+            item.end_time | delSecond
           }}</view
         >
       </view>

@@ -1,24 +1,24 @@
 <template>
   <view class="order-card">
     <view class="order-card-header flex mb-10">
-      <view class="business-name flex1">{{ orderData.business_name }}</view>
-      <view class="state mr-10">{{ orderData.state }}</view>
+      <view class="business-name flex1">{{ orderData.shop_info.name }}</view>
+      <view class="state mr-10">{{ orderData.pay_state_text }}</view>
       <u-icon name="trash" size="18"></u-icon>
     </view>
     <view class="order-card-content">
       <view
         class="order-card-content-item flex"
-        v-for="item in orderData.shop_list || []"
+        v-for="item in orderData.orderGoods || []"
         :key="item.id"
       >
         <u-image
-          :src="item.order_image"
+          :src="item.photo"
           width="120rpx"
           height="120rpx"
           radius="4"
           :lazy-load="true"
         ></u-image>
-        <view class="shop-name">{{ item.shop_name }}</view>
+        <view class="shop-name">{{ item.goods.name }}</view>
         <view class="shop-number">
           <span class="price-color font-14 mr-10">¥{{ item.price }}</span>
           x{{ item.number }}
@@ -26,14 +26,15 @@
       </view>
     </view>
     <view class="order-card-total-price font-14">
-      {{ `共 ${orderData.shop_number} 件商品 总计：` }}
-      <span class="price-color font-14">¥{{ orderData.total_price }}</span>
+      <!-- {{ `共 ${orderData.shop_number} 件商品 总计：` }} -->
+      总计：
+      <span class="price-color font-14">¥{{ orderData.order_total }}</span>
     </view>
     <view class="order-card-footer">
-      <view class="order-card-footer-btn" v-if="orderData.state === '待支付'">
+      <view class="order-card-footer-btn" v-if="orderData.pay_state === 0">
         <u-button type="primary" :plain="true" text="去支付" size="small"></u-button>
       </view>
-      <view class="order-card-footer-btn" v-if="orderData.state === '未使用'">
+      <view class="order-card-footer-btn" v-if="orderData.order_state === 0 && orderData.pay_state !== 0">
         <u-button type="error" :plain="true" text="去使用" size="small"></u-button>
       </view>
     </view>

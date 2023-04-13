@@ -52,6 +52,10 @@ Vue.mixin({
     getDate: function (value) {
       if (!value) return ''
       return moment(value).format("MM/DD")
+    },
+    delSecond: function (value) {
+      const data = value.split(":")
+      return `${data[0]}:${data[1]}`
     }
   }
 });

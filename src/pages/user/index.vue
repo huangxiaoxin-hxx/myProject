@@ -8,7 +8,7 @@
 			</view>
 		</view>
 		<view class="center-list">
-			<view class="center-list-item border-bottom" @click="handleNavTo({url: '/pages/accountManage/index'})">
+			<view class="center-list-item border-bottom" @click="handleNavTo({url: '/pageUser/accountManage/index'})">
 				<text class="list-icon">&#xe60f;</text>
 				<text class="list-text">帐号管理</text>
 				<text class="navigat-arrow">&#xe65e;</text>
