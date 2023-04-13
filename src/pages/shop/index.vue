@@ -45,7 +45,7 @@
                 :key="index2"
               >
                 <u-image
-                  :src="item.thumb_photo"
+                  :src="item2.thumb_photo"
                   width="120rpx"
                   height="120rpx"
                   radius="4"
