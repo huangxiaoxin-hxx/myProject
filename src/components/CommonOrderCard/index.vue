@@ -32,7 +32,7 @@
     </view>
     <view class="order-card-footer">
       <view class="order-card-footer-btn" v-if="orderData.pay_state === 0">
-        <u-button type="primary" :plain="true" text="去支付" size="small"></u-button>
+        <u-button type="primary" :plain="true" text="去支付" size="small" @click="handlePay"></u-button>
       </view>
       <view class="order-card-footer-btn" v-if="orderData.order_state === 0 && orderData.pay_state !== 0">
         <u-button type="error" :plain="true" text="去使用" size="small"></u-button>
@@ -42,11 +42,32 @@
 </template>
 
 <script>
+import { postPayOrder } from '@/serve/api'
+import { weixinPay } from '@/utils/pay'
 export default {
   name: "OrderCard",
   props: {
     orderData: { type: Object, default: () => {} },
   },
+  methods: {
+    async handlePay() {
+      uni.showLoading({title: '支付加载中'})
+      try {
+        const res = await postPayOrder({ order_sn: this.orderData.order_sn })
+        const success = (res) => {
+          this.handleMessage({title: '支付成功'})
+        }
+        const { nonceStr, package: packageId, timeStamp, paySign, signType} = res
+        weixinPay({
+          timeStamp, nonceStr, packageId, signType, paySign, success
+        })
+      } catch (error) {
+        console.log(error)
+      } finally {
+        uni.hideLoading()
+      }
+    }
+  }
 };
 </script>
 
