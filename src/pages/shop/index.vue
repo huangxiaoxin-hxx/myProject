@@ -276,7 +276,7 @@ export default {
         })
         const res = await postPayOrder({ order_sn: order.order_sn })
         const success = (res) => {
-          console.log(res)
+          this.handleMessage({title: '支付成功'})
         }
         const { nonceStr, package: packageId, timeStamp, paySign, signType} = res
         weixinPay({

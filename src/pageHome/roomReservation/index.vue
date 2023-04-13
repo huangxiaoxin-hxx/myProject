@@ -43,7 +43,7 @@
         <view class="room-order" v-if="pickTime.length">
           <view class="room-order-title">订单列表</view>
           <view class="room-order-item flex" v-for="item in pickTime" :key="item.id">
-            <view class="room-order-item-comment">{{ item.title }} {{ item.start_time | getDate }}：</view>
+            <view class="room-order-item-comment">{{ item.date | getDate }} {{ item.title }}：</view>
             <view class="room-order-item-timer flex1"
               >{{ item.start_time | delSecond }}-{{
                 item.end_time | delSecond
@@ -103,14 +103,19 @@ export default {
     this.roomInfo = data.room;
     this.roomPrice = data.yuYueList[0].room_yuyue;
     this.reservationList = data.yuYueList;
+    this.reservationList.map(item => {
+      item.room_yuyue.map(item2 => {
+        item2.date = item.date
+      })
+    })
   },
   computed: {
     totalPrice() {
       let total = 0
       this.pickTime.map(item => {
-        total += parseFloat(item.price)
+        total += parseFloat(item.price) * 100
       })
-      return total
+      return total / 100
     }
   },
 };
@@ -176,6 +181,12 @@ export default {
       &-item {
         font-size: 28rpx;
         margin-bottom: 20rpx;
+        &-comment {
+          width: 220rpx;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
       }
       &-totalPrice{
         justify-content: flex-end;

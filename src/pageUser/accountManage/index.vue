@@ -63,7 +63,6 @@ export default {
   methods: {
     ...mapActions("user", ["updateUserInfo", "logout"]),
     async chooseAvatar(data) {
-      console.log(data.detail);
       this.loading = true
       await this.updateUserInfo({ header: data.detail.avatarUrl });
       this.loading = false

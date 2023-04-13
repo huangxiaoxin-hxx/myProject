@@ -65,9 +65,9 @@ export default {
     totalPrice() {
       let total = 0;
       this.shopList.forEach((item) => {
-        total += item.price * item.number;
+        total += item.price * 100 * item.number;
       });
-      return total;
+      return total / 100;
     },
     totalNumber() {
       let total = 0;

@@ -122,12 +122,12 @@ export default {
     },
     handleNavigation() {
       uni.openLocation({
-			latitude: parseFloat(this.homeInfo.extend.lat),
-			longitude: parseFloat(this.homeInfo.extend.lng),
-			success: function () {
-				console.log('success');
-			}
-		});
+        latitude: parseFloat(this.homeInfo.extend.lat),
+        longitude: parseFloat(this.homeInfo.extend.lng),
+        success: function () {
+          console.log('success');
+        }
+      });
     }
   },
   async onLoad({ id }) {

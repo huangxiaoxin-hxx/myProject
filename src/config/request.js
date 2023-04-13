@@ -27,7 +27,7 @@ module.exports = (vm) => {
 		// 自定义参数
 		const custom = response.config?.custom
 		if (data.code !== 200) { 
-			console.log(data)
+			// console.log(data)
 			// 如果没有显式定义custom的toast参数为false的话，默认对报错进行toast弹出提示
 			// if (custom.toast !== false) {
 			// 	uni.$u.toast(data.message)

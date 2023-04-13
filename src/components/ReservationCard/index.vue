@@ -26,7 +26,7 @@
     <view class="reservation-card-comment">
       <view
         class="reservation-card-comment-item"
-        :class="isSelect(item) && 'reservation-card-comment-item__selected'"
+        :class="`${isSelect(item) && 'reservation-card-comment-item__selected'} ${item.yuyue_state === 1 && 'reservation-card-comment-item__noSelect'}`"
         v-for="(item) in firstReservationList"
         :key="item.id"
         @click="handlePickTime(item)"
@@ -94,12 +94,15 @@ export default {
       this.$emit('handlePickTime', this.pickTime)
     },
     isSelect(data) {
-      if(this.pickTime.includes(data)) {
-        return true
-      }
-      return false
+      return this.pickTime.find(element => {
+        return element.id === data.id && element.date === data.date
+      })
+      // if(this.pickTime.includes(data)) {
+      //   return true
+      // }
+      // return false
     }
-  },
+  }
 };
 </script>
 
@@ -125,6 +128,9 @@ export default {
         border: 1px solid #87CEFA;
         background-color: #87CEFA;
         color: #fff;
+      }
+      &__noSelect {
+        background-color: #f1f1f1;
       }
       .title {
         font-size: 28rpx;

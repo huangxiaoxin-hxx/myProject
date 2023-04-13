@@ -32,7 +32,6 @@ export default {
   },
   methods: {
     confirm() {
-      console.log(this.nickname);
       this.$emit('confirm', this.nickname)
     },
     cancel() {

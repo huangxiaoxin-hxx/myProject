@@ -3,6 +3,10 @@ import moment from "moment";
 
 Vue.mixin({
   methods: {
+    // message
+    handleMessage({ icon='none', title='' }) {
+      uni.showToast({ icon, title })
+    },
     // 跳转封装
     handleNavTo({ url, type = "navigateTo", animation = true }) {
       uni[type]({

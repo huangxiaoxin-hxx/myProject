@@ -35,11 +35,9 @@ export default {
          success: async (res) => {
           // todo 将code值传给后端
           const { openid } = await postLogin({code: res.code})
-          console.log(openid)
           uni.getUserInfo({
             provider: 'weixin',
             success: async (infoRes) => {
-              console.log('用户昵称为：' + JSON.stringify(infoRes));
               const { encryptedData, iv } = infoRes
               const userInfo = await postUserProfile({
                 openid,
