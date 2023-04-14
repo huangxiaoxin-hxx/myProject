@@ -8,3 +8,9 @@ export const createOrder = (params, config = {}) => http.post('/shop/buy/createO
 
 // 微信支付预请求订单
 export const postPayOrder = (params, config = {}) => http.post('/mini/pay/createOrder', params, config)
+
+// 订单详情 shop/order/info
+export const getOrderDetail = (data) => http.get('/shop/order/info', data)
+
+// 预约房间下单
+export const createRoomOrder = (params, config = {}) => http.post('shop/shop/yuyueRoom', params, config)

@@ -53,7 +53,7 @@ export default {
         pageSize: 10,
         total: 0,
       },
-      keyword: null,
+      keyword: '',
       loading: false,
       loadStatus: "nomore",
     };
@@ -82,7 +82,7 @@ export default {
       this.handleNavTo({ type: 'switchTab', url: '/pages/home/index' })
     }
   },
-  created() {
+  onLoad() {
     this.fetchBusinessList({ data: this.pageInfo });
   },
   onReachBottom() {

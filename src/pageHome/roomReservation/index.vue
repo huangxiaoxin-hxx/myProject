@@ -71,7 +71,7 @@
 
 <script>
 import ReservationCard from "@/components/ReservationCard";
-import { getRoomInfo } from "@/serve/api";
+import { getRoomInfo, createRoomOrder } from "@/serve/api";
 export default {
   name: "RoomReservation",
   components: {
@@ -90,10 +90,18 @@ export default {
     handlePickTime(list) {
       this.pickTime = list;
     },
-    handleOrder() {
+    async handleOrder() {
       if(this.pickTime.length === 0) {
         return
       }
+      console.log(this.pickTime)
+      const params = {
+        room_id: this.pickTime[0].room_id,
+        date: this.pickTime[0].date,
+        price_id: this.pickTime[0].id
+      }
+      const order = await createRoomOrder(params)
+      console.log(order)
     }
   },
   async onLoad({ roomName, roomId }) {
@@ -108,7 +116,6 @@ export default {
       })
     })
     this.reservationList = data.yuYueList;
-    console.log(this.reservationList)
   },
   computed: {
     totalPrice() {
