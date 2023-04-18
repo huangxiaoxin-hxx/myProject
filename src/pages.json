@@ -72,6 +72,13 @@
 			"style": {
 				"navigationStyle": "custom"
 			}
+		},{
+			"path": "goodsOrder/index",
+			"style": {
+				"navigationBarBackgroundColor": "#87CEFA",
+				"navigationBarTextStyle": "white",
+				"navigationBarTitleText": "商品订单中心"
+			}
 		}]
 	}],
 	"globalStyle": {

@@ -7,12 +7,12 @@
 </template>
 
 <script>
-import { getRoomOrderDetail } from '@/serve/api'
+import { getOrderDetail } from '@/serve/api'
 export default {
   name: "orderDetail",
   async onLoad({ id }) {
     console.log(id)
-    const data = await getRoomOrderDetail({ data: { id } })
+    const data = await getOrderDetail({ data: { id } })
     console.log(data)
   }
 }

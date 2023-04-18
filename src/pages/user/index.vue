@@ -25,9 +25,9 @@
 				<text class="list-text">帮助与反馈</text>
 				<text class="navigat-arrow">&#xe65e;</text>
 			</view>
-			<view class="center-list-item">
+			<view class="center-list-item" @click="handleNavTo({ url: '/pageOrder/goodsOrder/index' })">
 				<text class="list-icon">&#xe65f;</text>
-				<text class="list-text">服务条款及隐私</text>
+				<text class="list-text">商品订单</text>
 				<text class="navigat-arrow">&#xe65e;</text>
 			</view>
 		</view>

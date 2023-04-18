@@ -71,7 +71,8 @@
 
 <script>
 import ReservationCard from "@/components/ReservationCard";
-import { getRoomInfo, createRoomOrder } from "@/serve/api";
+import { getRoomInfo, createRoomOrder, postPayOrder } from "@/serve/api";
+import { weixinPay } from '@/utils/pay'
 export default {
   name: "RoomReservation",
   components: {
@@ -94,14 +95,27 @@ export default {
       if(this.pickTime.length === 0) {
         return
       }
-      console.log(this.pickTime)
       const params = {
         room_id: this.pickTime[0].room_id,
         date: this.pickTime[0].date,
         price_id: this.pickTime[0].id
       }
-      const order = await createRoomOrder(params)
-      console.log(order)
+      uni.showLoading({title: '订单生成中', mask: true})
+      try {
+        const {order} = await createRoomOrder(params)
+        console.log(order)
+        const res = await postPayOrder({ order_sn: order.order_sn })
+        const success = (res) => {
+          this.handleMessage({title: '支付成功'})
+        }
+        const { nonceStr, package: packageId, timeStamp, paySign, signType} = res
+        weixinPay({
+          timeStamp, nonceStr, packageId, signType, paySign, success
+        })
+      } finally {
+        this.pickTime = []
+        uni.hideLoading()
+      }
     }
   },
   async onLoad({ roomName, roomId }) {

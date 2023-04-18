@@ -10,7 +10,7 @@
     </u-sticky>
     <view class="order-list">
       <view class="order-list-item" v-for="item in orderList" :key="item.id">
-        <CommonRoomOrderCard :orderData="item" @changeOrder="changeOrder"/>
+        <CommonOrderCard :orderData="item" />
       </view>
     </view>
     <view class="pb-20">
@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { getRoomOrder } from "@/serve/api";
+import { getOrderList } from "@/serve/api";
 export default {
   name: "Order",
   data() {
@@ -32,9 +32,9 @@ export default {
           type: "all",
         },
         {
-          name: "未使用",
+          name: "待收货",
           id: 2,
-          type: "unUse",
+          type: "Received",
         },
         {
           name: "已完成",
@@ -42,9 +42,9 @@ export default {
           type: "finish",
         },
         {
-          name: "使用中",
+          name: "待发货",
           id: 4,
-          type: "useing",
+          type: "unSend",
         },
         {
           name: "待支付",
@@ -59,18 +59,18 @@ export default {
         limit: 10,
       },
       total: 0,
-      status: 'nomore'
+      status: "nomore",
     };
   },
   methods: {
     async handleOrderType(item) {
       this.type = item.type;
-      await this.resetOrderList()
+      await this.resetOrderList();
     },
     async fetchOrderList() {
       // this.loading = true;
-      this.status = 'loading'
-      const res = await getRoomOrder({
+      this.status = "loading";
+      const res = await getOrderList({
         data: { type: this.type, ...this.pageInfo },
       });
       this.loading = false;
@@ -80,10 +80,10 @@ export default {
       } else {
         this.orderList = [...this.orderList, ...res.data];
       }
-      if(this.total <= this.pageInfo.page * this.pageInfo.limit) {
-        this.status = 'nomore'
+      if (this.total <= this.pageInfo.page * this.pageInfo.limit) {
+        this.status = "nomore";
       } else {
-        this.status = 'loadmore'
+        this.status = "loadmore";
       }
     },
     async resetOrderList() {
@@ -91,29 +91,25 @@ export default {
         page: 1,
         limit: 10,
       };
-      uni.showLoading({title: '加载中'})
+      uni.showLoading({ title: "加载中" });
       try {
         await this.fetchOrderList();
       } finally {
-        uni.hideLoading()
+        uni.hideLoading();
       }
-      
     },
-    changeOrder() {
-      this.resetOrderList()
-    }
   },
-  computed: {
-
-  },
+  computed: {},
   async onReachBottom() {
-    if(this.pageInfo.page * this.pageInfo.limit >= this.total) { return }
-    this.pageInfo.page += 1
-    await this.fetchOrderList()
+    if (this.pageInfo.page * this.pageInfo.limit >= this.total) {
+      return;
+    }
+    this.pageInfo.page += 1;
+    await this.fetchOrderList();
   },
   async onShow() {
-    await this.resetOrderList()
-  }
+    await this.resetOrderList();
+  },
 };
 </script>
 

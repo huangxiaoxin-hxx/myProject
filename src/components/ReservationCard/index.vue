@@ -82,20 +82,21 @@ export default {
       this.selectDateList = data.comment;
     },
     handlePickTime(data) {
-      if(this.pickTime.length !== 0) {
-        uni.showToast({ title: "暂不支持预约多场次", icon: "none" });
-        return;
-      }
       if (data.yuyue_state === 1) {
         uni.showToast({ title: "抱歉，该场次已被预约", icon: "none" });
         return;
       }
+
       const index = this.pickTime.indexOf(data)
       if(index !== -1) {
         this.pickTime.splice(index, 1)
+      } else if (this.pickTime.length !== 0) {
+        uni.showToast({ title: "暂不支持预约多场次", icon: "none" });
+        return;
       } else {
         this.pickTime.push(data)
       }
+      
       this.$emit('handlePickTime', this.pickTime)
     },
     isSelect(data) {
