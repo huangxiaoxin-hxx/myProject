@@ -38,6 +38,7 @@
           <ReservationCard
             :reservationList="reservationList"
             @handlePickTime="handlePickTime"
+            ref="reservationCard"
           />
         </view>
         <view class="room-order" v-if="pickTime.length">
@@ -114,6 +115,7 @@ export default {
         })
       } finally {
         this.pickTime = []
+        console.log(this.$refs.reservationCard.pickTime = [])
         uni.hideLoading()
       }
     }
