@@ -20,9 +20,9 @@
 			</view>
 		</view>
 		<view class="center-list">
-			<view class="center-list-item border-bottom">
+			<view class="center-list-item border-bottom" @click="handleNavTo({ url: '/pageUser/registerBusiness/index' })">
 				<text class="list-icon">&#xe60b;</text>
-				<text class="list-text">帮助与反馈</text>
+				<text class="list-text">注册成为商家</text>
 				<text class="navigat-arrow">&#xe65e;</text>
 			</view>
 			<view class="center-list-item" @click="handleNavTo({ url: '/pageOrder/goodsOrder/index' })">
