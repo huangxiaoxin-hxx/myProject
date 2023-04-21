@@ -104,9 +104,10 @@ export default {
     },
     submit() {
 			this.$refs.uForm.validate().then(res => {
-				uni.$u.toast('校验通过')
+				// uni.$u.toast('校验通过')
+        // todo 对接注册商家接口
 			}).catch(errors => {
-				uni.$u.toast('校验失败')
+				uni.$u.toast('请填写注册信息')
 			})
 		}
   },

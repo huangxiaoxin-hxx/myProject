@@ -15,7 +15,8 @@
             "delay" : 0
         },
         "modules" : {
-            "Payment" : {}
+            "Payment" : {},
+            "Share" : {}
         },
         /* 模块配置 */
         "distribute" : {
@@ -56,6 +57,12 @@
                         "appid" : "wxb8870caad06c81ba",
                         "UniversalLinks" : ""
                     }
+                },
+                "share" : {
+                    "weixin" : {
+                        "appid" : "wxb8870caad06c81ba",
+                        "UniversalLinks" : ""
+                    }
                 }
             }
         }
@@ -68,7 +75,8 @@
         "appid" : "wxb8870caad06c81ba",
         "setting" : {
             "urlCheck" : false,
-            "es6" : false
+            "es6" : false,
+            "minified" : true
         },
         "usingComponents" : true
     },

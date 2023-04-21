@@ -31,18 +31,20 @@
 				<text class="navigat-arrow">&#xe65e;</text>
 			</view>
 		</view>
+
 		<view class="center-list">
-			<view class="center-list-item">
+			<button class="center-list-item border-bottom button-noStyle" open-type="share">
 				<text class="list-icon">&#xe614;</text>
-				<text class="list-text">关于应用</text>
+				<text class="list-text">分享给好友</text>
 				<text class="navigat-arrow">&#xe65e;</text>
-			</view>
+			</button>
 		</view>
 	</view>
 </template>
 
 <script>
 import { mapActions, mapState } from 'vuex'
+import { getStorage } from '@/utils'
 	export default {
 		data() {
 			return {
@@ -52,16 +54,28 @@ import { mapActions, mapState } from 'vuex'
 		methods: {
 			...mapActions('user', ['fetchUserInfo']),
 			goLogin() {
-				if (!this.userInfo) {
-					this.handleNavTo({url: '/pages/login/index'})
-				}
-			}
+				// if (!this.userInfo) {
+				// 	this.handleNavTo({url: '/pages/login/index'})
+				// }
+			},
 		},
 		computed: {
-			...mapState('user', ['userInfo'])
+			...mapState('user', ['userInfo']),
+			...mapState('home', ['shopInfo'])
 		},
 		onShow() {
 			this.fetchUserInfo()
+		},
+		onShareAppMessage: function (res) {
+			if (res.from === 'button') {
+				// 来自页面内转发按钮
+				console.log(res.target)
+			}
+			return {
+				title: '喜来发｜娱乐小吃',
+				path: '/pages/home/index?id='+ this.shopInfo.logo,
+				imageUrl: this.shopInfo.logo
+			}
 		}
 	}
 </script>
@@ -181,5 +195,13 @@ import { mapActions, mapState } from 'vuex'
 		color: #555;
 		text-align: right;
 		font-family: texticons;
+	}
+	.button-noStyle {
+		background: #fff;
+		border-radius: 0;
+		display: flex;
+		&::after {
+			border: none;
+		}
 	}
 </style>

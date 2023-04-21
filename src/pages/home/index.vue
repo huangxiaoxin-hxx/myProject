@@ -109,7 +109,7 @@ export default {
     };
   },
   methods: {
-    ...mapMutations('home', ['setRoomList']),
+    ...mapMutations('home', ['setRoomList', 'setShopInfo']),
     handleRoomCard(item) {
       this.handleNavTo({
         url: `/pageHome/roomReservation/index?roomName=${item.name}&roomId=${item.id}`,
@@ -157,6 +157,7 @@ export default {
       this.roomList = data.room_list;
       this.notice = data.article;
       this.setRoomList(data.room_list)
+      this.setShopInfo(data.shop_info)
     } finally {
       this.loading = false;
     }

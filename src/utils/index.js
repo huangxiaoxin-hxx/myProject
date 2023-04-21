@@ -31,3 +31,10 @@ export function getStorage(key, defaultVal = null) {
 export function haveMonthDate(date) {
   return moment(date).format("MM-DD")
 }
+
+export function getResidueTime(date) {
+  const orderTime = 600
+  const curDate = moment().unix()
+  const createDate = moment(date).unix()
+  return orderTime - (curDate - createDate)
+}

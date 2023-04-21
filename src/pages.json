@@ -84,6 +84,11 @@
 				"navigationBarTextStyle": "white",
 				"navigationBarTitleText": "商品订单中心"
 			}
+		},{
+			"path": "goodOrderDetail/index",
+			"style": {
+				"navigationStyle": "custom"
+			}
 		}]
 	}],
 	"globalStyle": {
