@@ -73,7 +73,7 @@ import { getStorage } from '@/utils'
 			}
 			return {
 				title: '喜来发｜娱乐小吃',
-				path: '/pages/home/index?id='+ this.shopInfo.logo,
+				path: '/pages/home/index?id='+ this.shopInfo.id,
 				imageUrl: this.shopInfo.logo
 			}
 		}

@@ -34,9 +34,7 @@
           label="性别"
           prop="areaList"
           borderBottom
-          @click="
-            showArea = true;
-          "
+          @click="showArea = true"
           ref="areaList"
         >
           <u-input
@@ -49,20 +47,43 @@
           <u-icon slot="right" name="arrow-right"></u-icon>
         </u-form-item>
       </u-form>
+      <view class="agreement">
+        <u-checkbox-group @change="handleAgree">
+          <u-checkbox shape="circle" name="agree" :checked="isAgree" activeColor="#87CEFA"></u-checkbox>
+        </u-checkbox-group>
+        <view class="agreement-text">
+          勾选表示已阅读<span class="price-color" @click="handleAgreementText">《个人信息授权》</span
+          >
+        </view>
+      </view>
       <view class="btn">
-        <u-button @click="submit" type="error" size="small" text="我要开店"></u-button>
+        <u-button
+          @click="submit"
+          type="error"
+          size="small"
+          text="我要开店"
+          :disabled="!isAgree"
+        ></u-button>
       </view>
     </view>
-    <AddressPicker :show="showArea" title="选择地区" @confirm="selectArea" @cancel="showArea=false"/>
+    <AddressPicker
+      :show="showArea"
+      title="选择地区"
+      @confirm="selectArea"
+      @cancel="showArea = false"
+    />
+    <u-modal :show="showAgree" @confirm="confirmAgree" ref="uModal" showCancelButton @cancel="showAgree = false">
+      请你输入正确的信息，该数据将用于联系您，后台审核人员会尽快给您回电！
+    </u-modal>
   </CommonPage>
 </template>
 
 <script>
-import AddressPicker from '@/components/address-picker/components/address-picker/address-picker.vue'
+import AddressPicker from "@/components/address-picker/components/address-picker/address-picker.vue";
 export default {
   name: "RegisterBusiness",
   components: {
-    AddressPicker
+    AddressPicker,
   },
   data() {
     return {
@@ -88,32 +109,48 @@ export default {
           trigger: ["blur", "change"],
         },
         areaList: {
-					type: 'string',
-					required: true,
-					message: '请选择地区',
-					trigger: ['blur', 'change']
-				},
+          type: "string",
+          required: true,
+          message: "请选择地区",
+          trigger: ["blur", "change"],
+        },
       },
+      isAgree: false,
+      showAgree: false
     };
   },
   methods: {
     selectArea(data) {
-      this.formData.areaList = data.value.join("、")
-      this.showArea = false
-      console.log(this.formData)
+      this.formData.areaList = data.value.join("、");
+      this.showArea = false;
+      console.log(this.formData);
     },
     submit() {
-			this.$refs.uForm.validate().then(res => {
-				// uni.$u.toast('校验通过')
-        // todo 对接注册商家接口
-			}).catch(errors => {
-				uni.$u.toast('请填写注册信息')
-			})
-		}
+      this.$refs.uForm
+        .validate()
+        .then((res) => {
+          // uni.$u.toast('校验通过')
+          // todo 对接注册商家接口
+        })
+        .catch((errors) => {
+          uni.$u.toast("请填写注册信息");
+        });
+    },
+    handleAgree(e) {
+      if(e.length > 0) this.isAgree = true
+      else this.isAgree = false
+    },
+    handleAgreementText() {
+      this.showAgree = true
+    },
+    confirmAgree() {
+      this.isAgree = true
+      this.showAgree = false
+    }
   },
   onReady() {
-  //如果需要兼容微信小程序，并且校验规则中含有方法等，只能通过setRules方法设置规则。
-    this.$refs.uForm.setRules(this.rules)
+    //如果需要兼容微信小程序，并且校验规则中含有方法等，只能通过setRules方法设置规则。
+    this.$refs.uForm.setRules(this.rules);
   },
 };
 </script>
@@ -132,6 +169,11 @@ export default {
   }
   .btn {
     margin-top: 50rpx;
+  }
+  .agreement {
+    display: flex;
+    align-items: center;
+    margin-top: 30rpx;
   }
 }
 </style>

@@ -47,7 +47,7 @@
       <!-- 通知信息 -->
       <view class="mb-20">
         <u-notice-bar
-          :text="notice.title"
+          :text="notice.title || ''"
           speed="30"
           bgColor="#F0F8FF"
           color="#00BFFF"
@@ -67,7 +67,7 @@
             :image="item.image"
             :name="item.name"
             :desc="item.label"
-            :isUse="item.room_use_state"
+            :isUse="item.room_use_state === 1 ? true : false"
           />
         </view>
       </view>
