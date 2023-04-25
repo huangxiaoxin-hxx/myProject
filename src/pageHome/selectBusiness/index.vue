@@ -25,7 +25,7 @@
           :image="item.logo"
           :distance="item.distance"
           :timer="item.timer"
-          :address="item.address"
+          :address="item.province + item.city + item.district"
           :business_id="item.id"
         />
       </view>

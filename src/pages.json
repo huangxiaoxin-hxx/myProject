@@ -69,6 +69,11 @@
 			"style": {
 				"navigationStyle": "custom"
 			}
+		}, {
+			"path": "inputUserInfo/index",
+			"style": {
+				"navigationStyle": "custom"
+			}
 		}]
 	}, {
 		"root": "pageOrder",

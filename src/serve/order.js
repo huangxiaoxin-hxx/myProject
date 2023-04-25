@@ -13,13 +13,13 @@ export const postPayOrder = (params, config = {}) => http.post('/mini/pay/create
 export const getOrderDetail = (data) => http.get('/shop/order/info', data)
 
 // 预约房间下单
-export const createRoomOrder = (params, config = {}) => http.post('shop/shop/yuyueRoom', params, config)
+export const createRoomOrder = (params, config = {}) => http.post('/shop/shop/yuyueRoom', params, config)
 
 // 房间订单列表 shop/yuyue/orderList
 export const getRoomOrder = (data) => http.get('/shop/yuyue/orderList', data)
 
 // 取消预约订单 shop/yuyue/cancelOrder
-export const refundRoomOrder= (params, config = {}) => http.post('shop/yuyue/cancelOrder', params, config)
+export const refundRoomOrder= (params, config = {}) => http.post('/shop/yuyue/cancelOrder', params, config)
 
 // 预约订单详情 shop/yuyue/orderInfo
 export const getRoomOrderDetail = (data) => http.get('/shop/yuyue/orderInfo', data)

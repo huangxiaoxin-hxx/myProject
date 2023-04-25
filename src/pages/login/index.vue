@@ -48,7 +48,12 @@ export default {
               this.setToken(userInfo.token)
               this.setUserInfo(userInfo.user)
               this.loading = false
-              this.handleNavBack();
+              if(!userInfo.mobile) {
+                this.handleNavTo({ url: '/pageUser/inputUserInfo/index' })
+              } else {
+                this.handleNavBack();
+              }
+              
             },
             fail: (err) => {
               console.log(err)

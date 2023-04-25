@@ -1,7 +1,8 @@
 <template>
   <CommonPage navBarTitle="成为商家">
     <view class="container">
-      <view class="title">填写表单，立即开店</view>
+      <view class="title" v-if="!isSubmit">填写表单，立即开店</view>
+      <view class="title" v-else>信息已提交</view>
       <u-form
         labelPosition="left"
         :model="formData"
@@ -15,6 +16,7 @@
             border="none"
             placeholder="请输入您的姓名"
             placeholderClass="input_placeholder"
+            :disabled="isSubmit"
           />
         </u-form-item>
         <u-form-item
@@ -28,10 +30,11 @@
             border="none"
             placeholder="请输入您的电话"
             placeholderClass="input_placeholder"
+            :disabled="isSubmit"
           />
         </u-form-item>
-        <u-form-item
-          label="性别"
+        <!-- <u-form-item
+          label="地区"
           prop="areaList"
           borderBottom
           @click="showArea = true"
@@ -45,9 +48,23 @@
             border="none"
           />
           <u-icon slot="right" name="arrow-right"></u-icon>
+        </u-form-item> -->
+        <u-form-item
+          label="店名"
+          prop="shopName"
+          borderBottom
+          ref="shopName"
+        >
+          <u-input
+            v-model="formData.shopName"
+            border="none"
+            placeholder="请输入您的店铺名称"
+            placeholderClass="input_placeholder"
+            :disabled="isSubmit"
+          />
         </u-form-item>
       </u-form>
-      <view class="agreement">
+      <view class="agreement" v-if="!isSubmit">
         <u-checkbox-group @change="handleAgree">
           <u-checkbox shape="circle" name="agree" :checked="isAgree" activeColor="#87CEFA"></u-checkbox>
         </u-checkbox-group>
@@ -56,7 +73,7 @@
           >
         </view>
       </view>
-      <view class="btn">
+      <view class="btn" v-if="!isSubmit">
         <u-button
           @click="submit"
           type="error"
@@ -80,6 +97,7 @@
 
 <script>
 import AddressPicker from "@/components/address-picker/components/address-picker/address-picker.vue";
+import { postApplyBusiness, getApplyInfo } from '@/serve/api';
 export default {
   name: "RegisterBusiness",
   components: {
@@ -91,6 +109,7 @@ export default {
         realName: null,
         phoneNumber: null,
         areaList: null,
+        shopName: null
       },
       showArea: false,
       rules: {
@@ -108,15 +127,16 @@ export default {
           message: "请输入手机号码",
           trigger: ["blur", "change"],
         },
-        areaList: {
+        shopName: {
           type: "string",
           required: true,
-          message: "请选择地区",
+          message: "请填写店铺名",
           trigger: ["blur", "change"],
         },
       },
       isAgree: false,
-      showAgree: false
+      showAgree: false,
+      isSubmit: false
     };
   },
   methods: {
@@ -128,13 +148,21 @@ export default {
     submit() {
       this.$refs.uForm
         .validate()
-        .then((res) => {
-          // uni.$u.toast('校验通过')
+        .then(async (res) => {
+          uni.showLoading({ title: '信息提交中' })
           // todo 对接注册商家接口
+          await postApplyBusiness({
+            true_name: this.formData.realName,
+            mobile: this.formData.phoneNumber,
+            name: this.formData.shopName
+          })
+          this.isSubmit = true
+          uni.hideLoading()
         })
         .catch((errors) => {
-          uni.$u.toast("请填写注册信息");
-        });
+          uni.$u.toast("请填写完整的注册信息");
+          uni.hideLoading()
+        })
     },
     handleAgree(e) {
       if(e.length > 0) this.isAgree = true
@@ -152,6 +180,15 @@ export default {
     //如果需要兼容微信小程序，并且校验规则中含有方法等，只能通过setRules方法设置规则。
     this.$refs.uForm.setRules(this.rules);
   },
+  async onLoad() {
+    const data = await getApplyInfo()
+    if(data && data.length !== 0) {
+      this.isSubmit = true
+      this.formData.phoneNumber = data.mobile
+      this.formData.realName = data.true_name
+      this.formData.shopName = data.name
+    }
+  }
 };
 </script>
 
